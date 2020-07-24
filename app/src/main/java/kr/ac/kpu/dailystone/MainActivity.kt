@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // Initialize Firebase Auth
         auth = Firebase.auth
-        if(etIdInput.)
+        //if(etIdInput.)
 
     }
 

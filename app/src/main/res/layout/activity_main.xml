@@ -4,68 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    >
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID : "
-        app:layout_constraintRight_toLeftOf="@+id/etIdInput"
-        app:layout_constraintTop_toBottomOf="@id/guideline1"
-        app:layout_constraintBaseline_toBaselineOf="@id/etIdInput"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PW : "
-        app:layout_constraintRight_toLeftOf="@+id/etIdInput"
-        app:layout_constraintTop_toBottomOf="@id/guideline1"
-        app:layout_constraintBaseline_toBaselineOf="@id/etPassInput"/>
-
-    <EditText
-        android:id="@+id/etIdInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="12"
-        app:layout_constraintTop_toBottomOf="@id/guideline1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-
-    <EditText
-        android:id="@+id/etPassInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="12"
-        app:layout_constraintTop_toBottomOf="@id/etIdInput"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        app:layout_constraintTop_toBottomOf="@id/etPassInput"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/btnSignup"
-        android:layout_marginTop="20dp"/>
-    <Button
-        android:id="@+id/btnSignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        app:layout_constraintTop_toBottomOf="@id/etPassInput"
-        app:layout_constraintLeft_toLeftOf="@id/btnLogin"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="20dp"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

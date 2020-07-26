@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <string name="app_name">DailyStone</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">kr.ac.kpu.dailystone.MainActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

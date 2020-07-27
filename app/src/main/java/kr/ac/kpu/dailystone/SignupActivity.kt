@@ -26,7 +26,6 @@ class SignupActivity : AppCompatActivity() {
                 createEmail(etIdInput, etPassInput)
             }
         }
-
     }
 
     private fun createEmail(etEmail : EditText, etPass : EditText){

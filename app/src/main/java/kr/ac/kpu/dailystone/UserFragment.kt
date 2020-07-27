@@ -29,12 +29,8 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
-        userBtnUpdate.setOnClickListener {
-
-        }
-
         userBtnReset.setOnClickListener {
-
+            userReset()         //아직 미구현
         }
 
         userBtnLogout.setOnClickListener {      //클릭 시 로그아웃
@@ -52,6 +48,10 @@ class UserFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+    }
+
+    private fun userReset(){
+
     }
 
     private fun signOut(){

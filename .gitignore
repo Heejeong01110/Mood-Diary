@@ -13,7 +13,6 @@
 .externalNativeBuild
 .cxx
 *.properties
-*.xml
 .idea/workspace.xml
 *.ser
 *.bin

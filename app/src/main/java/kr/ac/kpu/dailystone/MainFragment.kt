@@ -1,10 +1,24 @@
 package kr.ac.kpu.dailystone
 
+<<<<<<< HEAD
+=======
+import android.os.Build
+>>>>>>> master
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+<<<<<<< HEAD
+=======
+import androidx.annotation.RequiresApi
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_main.*
+>>>>>>> master
 
 
 class MainFragment : Fragment() {
@@ -14,11 +28,40 @@ class MainFragment : Fragment() {
             return MainFragment()
         }
     }
+<<<<<<< HEAD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+=======
+    private var mAuth: FirebaseAuth? = null //auth
+    private val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private lateinit var db: DatabaseReference
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        mAuth = FirebaseAuth.getInstance();
+        db = Firebase.database.reference
+        //preDate()
+
+        mainBtnHappy.setOnClickListener {
+            var dialog = DialogAddFragment(it.context)
+            dialog.show()
+        }
+        /* val args = Bundle()
+         args.putString("key", "value")
+         val dialogFragment = DialogFragment()
+         dialogFragment.setArguments(args)
+         fragmentManager?.let { dialogFragment.show(it, "Sample Dialog Fragment") }*/
+
+
+
+    }
+>>>>>>> master
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,4 +74,32 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
+<<<<<<< HEAD
+=======
+    /*
+   private fun preDate(){//이전 날짜 조회
+       var uUid:String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+       val dateRef:DatabaseReference = database.getReference(uUid)
+
+       // Read from the database
+       /*
+       dateRef.addValueEventListener(object : ValueEventListener {
+           override fun onDataChange(dataSnapshot: DataSnapshot) {
+               val value =dataSnapshot?.value.toString()
+               mainTvDate.setText(value)
+               Toast.makeText(applicationContext,"Successed to read value.",
+                   Toast.LENGTH_LONG).show()
+           }
+
+           override fun onCancelled(error: DatabaseError) {
+               // Failed to read value
+               Toast.makeText(applicationContext, "Failed to read value.",
+                   Toast.LENGTH_LONG).show()
+           }
+       })
+
+        */
+   }
+   */
+>>>>>>> master
 }

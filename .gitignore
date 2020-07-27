@@ -12,15 +12,3 @@
 /captures
 .externalNativeBuild
 .cxx
-*.properties
-.idea/workspace.xml
-*.ser
-*.bin
-*.lock
-*.lock
-*.bin
-local.properties
-.idea/workspace.xml
-.gradle/buildOutputCleanup/buildOutputCleanup.lock
-.gradle/6.1.1/fileHashes/fileHashes.lock
-.gradle/6.1.1/fileHashes/fileHashes.bin

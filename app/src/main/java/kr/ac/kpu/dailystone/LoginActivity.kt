@@ -67,6 +67,8 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(etEmail.text.toString(), etPass.text.toString()).addOnCompleteListener(this) { task ->
             if(task.isSuccessful){
                 //다음 화면으로 넘어가는 코드
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
                 Toast.makeText(this, "로그인이 완료되었습니다.", Toast.LENGTH_SHORT).show()
             } else {
                 //로그인에 실패했을 때 넣는 코드

@@ -26,7 +26,7 @@ class MainAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         super.destroyItem(container, position, `object`)
     }
-    fun addFragment(fragment: Fragment){
+   /* fun addFragment(fragment: Fragment){
         data.add(fragment)
-    }
+    }*/
 }

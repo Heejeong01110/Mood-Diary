@@ -18,3 +18,5 @@
 *.ser
 *.bin
 *.lock
+*.lock
+*.bin

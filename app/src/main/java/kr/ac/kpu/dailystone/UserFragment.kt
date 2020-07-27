@@ -38,7 +38,6 @@ class UserFragment : Fragment() {
 
         userBtnLogout.setOnClickListener {      //클릭 시 로그아웃
             signOut()
-
         }
     }
 

@@ -20,12 +20,14 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 class DialogAddFragment(context: Context) : Dialog(context) {
     private var mAuth: FirebaseAuth? = null
     val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     private lateinit var db: DatabaseReference
     private lateinit var level : Any
     private lateinit var diary : Any
+
     private val current: LocalDate = LocalDate.now()
     val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
     val formatted = current.format(formatter)

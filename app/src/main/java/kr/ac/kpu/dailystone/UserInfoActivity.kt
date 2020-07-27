@@ -24,11 +24,25 @@ class UserInfoActivity : AppCompatActivity() {
                 etChEmail.visibility = View.VISIBLE
 
             }else{
+                editFlagEmail = false
+                tvChEmail.text = etChEmail.text
+                tvChEmail.visibility = View.VISIBLE
+                etChEmail.visibility = View.INVISIBLE
             }
         }
 
         btnEditPassword.setOnClickListener {
+            if(editFlagPassword == false){
+                editFlagPassword = true
+                tvChPassword.visibility = View.INVISIBLE
+                etChPassword.visibility = View.VISIBLE
 
+            }else{
+                editFlagPassword = false
+                tvChPassword.text = etChPassword.text
+                tvChPassword.visibility = View.VISIBLE
+                etChPassword.visibility = View.INVISIBLE
+            }
         }
 
 

@@ -25,7 +25,8 @@ class UserFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
 
         userBtninfo.setOnClickListener {
-
+            val intent = Intent(context, UserInfoActivity::class.java)
+            startActivity(intent)
         }
 
         userBtnUpdate.setOnClickListener {

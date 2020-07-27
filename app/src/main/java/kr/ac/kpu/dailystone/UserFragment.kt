@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_userinfo.*
+import java.util.Calendar.getInstance
 
 
 class UserFragment : Fragment() {

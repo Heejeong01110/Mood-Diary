@@ -1,4 +1,3 @@
-
 *.iml
 .gradle
 /local.properties
@@ -13,8 +12,3 @@
 /captures
 .externalNativeBuild
 .cxx
-*.properties
-.idea/workspace.xml
-*.ser
-*.bin
-*.lock

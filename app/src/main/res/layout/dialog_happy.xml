@@ -68,7 +68,11 @@
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@drawable/dice"
+        android:padding="0sp"
+        android:scaleType="centerCrop"
+
+
         app:layout_constraintStart_toEndOf="@+id/dhEdHl"
         app:layout_constraintTop_toBottomOf="@+id/dhBtnH3" />
 

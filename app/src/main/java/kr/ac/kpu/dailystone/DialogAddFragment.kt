@@ -99,8 +99,6 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         postValues["level"] = level
         postValues["diary"] = diary
         postCounts["count"] = 1
-                /* id = readID()
-                 postValues["id"] = ++id*/
         myRefDiary.setValue(postValues)
         myRefCount.setValue(postCounts)
 

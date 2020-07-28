@@ -15,17 +15,19 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="940046d3-7084-475b-b9ca-6c5b751778aa" name="Default Changelist" comment="">
+    <list default="true" id="65011705-2382-4cfe-a601-2d5adced98e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/kr/ac/kpu/dailystone/DialogAddFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/kr/ac/kpu/dailystone/DialogAddFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_happy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_happy.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_29" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Q_Pixel2_" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -34,7 +36,12 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -277,6 +284,10 @@
     </state>
     <state x="626" y="247" key="AndroidCreateXmlResourceDialog/0.0.1536.834@0.0.1536.834" timestamp="1595582985300" />
     <state x="835" y="395" key="AndroidCreateXmlResourceDialog/0.23.2048.1257@0.23.2048.1257" timestamp="1595588921429" />
+    <state x="93" y="93" width="1350" height="648" key="DiffContextDialog" timestamp="1595924988565">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="93" y="93" width="1350" height="648" key="DiffContextDialog/0.0.1536.834@0.0.1536.834" timestamp="1595924988565" />
     <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1595777726007">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

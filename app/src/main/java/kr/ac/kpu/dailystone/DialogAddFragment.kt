@@ -26,12 +26,16 @@ class DialogAddFragment(context: Context) : Dialog(context) {
     private lateinit var diary : Any
 
     private val current: LocalDate = LocalDate.now()
-    val formatterYear = DateTimeFormatter.ofPattern("yyyy")
-    val yearformatted = current.format(formatterYear)
-    val formatterMonth = DateTimeFormatter.ofPattern("mm")
-    val monthformatted = current.format(formatterMonth)
-    val formatterDay = DateTimeFormatter.ofPattern("dd")
-    val dayformatted = current.format(formatterDay)
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+    private val formatted: String = current.format(formatter)
+    var date = formatted.substring(2,8)
+    private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
+    private val yearformatted: String = current.format(formatterYear)
+    var year = yearformatted.substring(2,4)
+    private val formatterMonth : DateTimeFormatter = DateTimeFormatter.ofPattern("MM")
+    private val monthformatted: String = current.format(formatterMonth)
+    private val formatterDay : DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
+    private val dayformatted: String = current.format(formatterDay)
     var user: FirebaseUser?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +47,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
 
         db=Firebase.database.reference
         var uid = user?.uid.toString()
-        readID(uid)
+        //readID(uid)
 
 
         dhBtnH1.setOnClickListener{
@@ -86,18 +90,23 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         level = dhEdHl.text.toString()
         diary = dhEdDiary.text.toString()
         //val myRef = database.getReference("posts")
-        val myRef = database.getReference(user?.uid.toString())
-
+        //val myRef = database.getReference(user?.uid.toString())
+        val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
+        val myRefCount = db.child(user!!.uid).child("count").child(date)
         val postValues: HashMap<String, Any> = HashMap()
-        postValues["date"] = formatted
+        val postCounts: HashMap<String, Any> = HashMap()
+       // postValues["date"] = formatted
         postValues["level"] = level
         postValues["diary"] = diary
-        /* id = readID()
-         postValues["id"] = ++id*/
-        myRef.setValue(postValues)
+        postCounts["count"] = 1
+                /* id = readID()
+                 postValues["id"] = ++id*/
+        myRefDiary.setValue(postValues)
+        myRefCount.setValue(postCounts)
+
         Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
     }
-
+    /*
     fun readID(uid:String): String {
         db = Firebase.database.reference
         var Did: String="1"
@@ -122,6 +131,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         })
         return Did
     }
+*/
 
 
 }

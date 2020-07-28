@@ -44,6 +44,10 @@ class MainFragment : Fragment() {
             var dialog = DialogAddFragment(it.context)
             dialog.show()
         }
+        mainBtnSad.setOnClickListener {
+            var dialog = DialogSadAddFragment(it.context)
+            dialog.show()
+        }
         /* val args = Bundle()
          args.putString("key", "value")
          val dialogFragment = DialogFragment()

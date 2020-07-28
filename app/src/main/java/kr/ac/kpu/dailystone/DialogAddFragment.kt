@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
@@ -87,22 +88,42 @@ class DialogAddFragment(context: Context) : Dialog(context) {
     fun onWriteDBPost() {
         db = Firebase.database.reference
         var user = FirebaseAuth.getInstance().currentUser
+        var cnt : Any =3
         level = dhEdHl.text.toString()
         diary = dhEdDiary.text.toString()
         //val myRef = database.getReference("posts")
         //val myRef = database.getReference(user?.uid.toString())
-        val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
-        val myRefCount = db.child(user!!.uid).child("count").child(date)
+        Log.d("Han", "$cnt")
         val postValues: HashMap<String, Any> = HashMap()
         val postCounts: HashMap<String, Any> = HashMap()
        // postValues["date"] = formatted
-        postValues["level"] = level
-        postValues["diary"] = diary
-        postCounts["count"] = 1
+        val myRefCount = db.child(user!!.uid).child("count").child(date)
+        postCounts["count"] = 2          //카운트 조건 추가
+        myRefCount.setValue(postCounts)
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                cnt = snapshot.child("count").value!!
+                Log.d("Han", "$cnt")
+                val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted).child(cnt.toString())
+
+                postValues["level"] = level
+                postValues["diary"] = diary
+
                 /* id = readID()
                  postValues["id"] = ++id*/
-        myRefDiary.setValue(postValues)
-        myRefCount.setValue(postCounts)
+                myRefDiary.setValue(postValues)
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        db.child(user!!.uid).child("count").child(date).addValueEventListener(postListener)
+
+
+
 
         Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
     }

@@ -52,17 +52,17 @@ class DialogAddFragment(context: Context) : Dialog(context) {
 
 
         dhBtnH1.setOnClickListener{
-            dhEdHl.setText("5")
+            dhEdHl.setText("30")
             level = dhEdHl.text.toString()
         }
 
         dhBtnH2.setOnClickListener{
-            dhEdHl.setText("10")
+            dhEdHl.setText("60")
             level = dhEdHl.text.toString()
         }
 
         dhBtnH3.setOnClickListener{
-            dhEdHl.setText("15")
+            dhEdHl.setText("100")
             level = dhEdHl.text.toString()
         }
 
@@ -103,6 +103,8 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 cnt = snapshot.child("count").value!!
+                var cnt1 = snapshot.childrenCount
+
                 Log.d("Han", "$cnt")
                 val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted).child(cnt.toString())
 

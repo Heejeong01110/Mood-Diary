@@ -108,12 +108,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
 
                 postValues["level"] = level
                 postValues["diary"] = diary
-
-                /* id = readID()
-                 postValues["id"] = ++id*/
                 myRefDiary.setValue(postValues)
-
-
             }
 
             override fun onCancelled(error: DatabaseError) {

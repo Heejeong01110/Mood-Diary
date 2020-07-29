@@ -4,19 +4,25 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.dialog_happy.*
+import java.lang.NumberFormatException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 class DialogAddFragment(context: Context) : Dialog(context) {
@@ -68,11 +74,66 @@ class DialogAddFragment(context: Context) : Dialog(context) {
 
         dhBtnDice.setOnClickListener {
             var rnd = Random()
-            var num = rnd.nextInt(15)
+            var num = rnd.nextInt(100)
             dhEdHl.setText(num.toString())
             level = dhEdHl.text.toString()
 
         }
+
+        dhSbar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    dhEdHl.setText(progress.toString());
+                    level = dhEdHl.text.toString()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
+
+        dhEdHl.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                try {
+                    var i: String? = dhEdHl.text.toString()
+                    if (i == "") {
+                        i = "0"
+                    }
+                    var str: Int? = i?.let { Integer.parseInt(it) }
+
+                    if ((i!!.toInt() > 100) || (i!!.toInt() < 0)) {
+                        Toast.makeText(context, "0부터 100까지의 숫자만 입력해주세요", Toast.LENGTH_SHORT).show()
+                        dhEdHl.setText("0")
+                    } else {
+                        dhSbar.progress = str!!
+                    }
+                }catch(e: NumberFormatException){
+                    Toast.makeText(context, "숫자만 입력가능합니다", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                dhEdHl.setSelection(dhEdHl.length())
+                    /*if (str != null) {
+
+                        dhSbar.progress = i
+                    }
+                    if(str == null){
+                        str = 0.toString()
+                        i = str.toInt()
+                        dhSbar.progress = i
+                    }*/
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
+
 
         dhBtnYes.setOnClickListener {
             // 데이터베이스에 저장

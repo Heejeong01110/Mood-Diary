@@ -20,7 +20,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/kr/ac/kpu/dailystone/DialogAddFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/kr/ac/kpu/dailystone/DialogAddFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_happy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_happy.xml" afterDir="false" />
@@ -265,10 +264,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="942" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1595775737276">
+    <state x="942" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1596002199918">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="942" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1595775737276" />
+    <state x="942" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1596002199918" />
     <state x="499" y="163" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595581590101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -292,25 +291,25 @@
     </state>
     <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595777726007" />
     <state x="549" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1595581812986" />
-    <state width="982" height="314" key="GridCell.Tab.0.bottom" timestamp="1595923917290">
-      <screen x="0" y="23" width="2048" height="1257" />
+    <state width="721" height="210" key="GridCell.Tab.0.bottom" timestamp="1596008877189">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="721" height="167" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595775009015" />
+    <state width="721" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596008877189" />
     <state width="982" height="314" key="GridCell.Tab.0.bottom/0.23.2048.1257@0.23.2048.1257" timestamp="1595923917290" />
-    <state width="982" height="314" key="GridCell.Tab.0.center" timestamp="1595923917289">
-      <screen x="0" y="23" width="2048" height="1257" />
+    <state width="721" height="210" key="GridCell.Tab.0.center" timestamp="1596008877189">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="721" height="167" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595775009015" />
+    <state width="721" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596008877189" />
     <state width="982" height="314" key="GridCell.Tab.0.center/0.23.2048.1257@0.23.2048.1257" timestamp="1595923917289" />
-    <state width="982" height="314" key="GridCell.Tab.0.left" timestamp="1595923917289">
-      <screen x="0" y="23" width="2048" height="1257" />
+    <state width="721" height="210" key="GridCell.Tab.0.left" timestamp="1596008877187">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="721" height="167" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595775009014" />
+    <state width="721" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596008877187" />
     <state width="982" height="314" key="GridCell.Tab.0.left/0.23.2048.1257@0.23.2048.1257" timestamp="1595923917289" />
-    <state width="982" height="314" key="GridCell.Tab.0.right" timestamp="1595923917289">
-      <screen x="0" y="23" width="2048" height="1257" />
+    <state width="721" height="210" key="GridCell.Tab.0.right" timestamp="1596008877189">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="721" height="167" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595775009015" />
+    <state width="721" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596008877189" />
     <state width="982" height="314" key="GridCell.Tab.0.right/0.23.2048.1257@0.23.2048.1257" timestamp="1595923917289" />
     <state x="555" y="54" key="SettingsEditor" timestamp="1595994418468">
       <screen x="0" y="0" width="1536" height="824" />
@@ -320,10 +319,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="954" y="193" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1595773190971" />
-    <state x="862" y="100" width="581" height="630" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1595774726781">
+    <state x="862" y="100" width="581" height="630" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1596002917817">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="862" y="100" width="581" height="630" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1595774726781" />
+    <state x="862" y="100" width="581" height="630" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1596002917817" />
     <state x="82" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1595994275990">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -59,7 +59,6 @@ class MainFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
         //preDate()
-        ProgressView() //프로그레스바 출력
 
         mainBtnHappy.setOnClickListener {
             var dialog = DialogAddFragment(it.context)
@@ -92,43 +91,7 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun ProgressView(){
-        var user = FirebaseAuth.getInstance().currentUser
-        var day:Double = 50.0
-        var dayList = mutableListOf<Int>()
-        var dcnt:Any = 0
 
-        val daymyRef = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
-
-        val dayListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.child("count").child(date).child("count").value==null){
-                    dcnt=0
-                }
-                else{
-                    dcnt = snapshot.child("count").child(date).child("count").value!!
-                }
-
-                var level:Any=0
-                for( i in 0 until dcnt.toString().toInt()){
-                    level = snapshot.child("diary").child(year).child(monthformatted).child(dayformatted).child(dcnt.toString()).child("level").value!!
-                    Log.d("daytest","level : $level")
-                    dayList.add(level.toString().toInt())
-                }
-                day = dayList!!.average()
-                Log.d("daytest","day : $day")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        }
-        db.child(user!!.uid).addValueEventListener(dayListener)
-
-        mainPbDay.progress = day.toInt()
-
-
-    }
 
 
 

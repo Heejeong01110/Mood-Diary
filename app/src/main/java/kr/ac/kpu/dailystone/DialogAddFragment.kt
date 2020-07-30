@@ -98,7 +98,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         val postCounts: HashMap<String, Any> = HashMap()
        // postValues["date"] = formatted
         val myRefCount = db.child(user!!.uid).child("count").child(date)
-        postCounts["count"] = 2          //카운트 조건 추가
+        postCounts["count"] = 1          //카운트 조건 추가
         myRefCount.setValue(postCounts)
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

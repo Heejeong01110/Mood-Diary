@@ -34,7 +34,6 @@ class MainFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
         //preDate()
-
         mainBtnHappy.setOnClickListener {
             var dialog = DialogAddFragment(it.context)
             dialog.show()

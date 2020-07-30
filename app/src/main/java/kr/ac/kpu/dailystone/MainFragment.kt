@@ -59,6 +59,7 @@ class MainFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
         //preDate()
+        ProgressView()
 
         mainBtnHappy.setOnClickListener {
             var dialog = DialogAddFragment(it.context)
@@ -89,6 +90,53 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }
+
+    private fun ProgressView(){
+        var user = FirebaseAuth.getInstance().currentUser
+        var day:Int = 50
+        var dayList = mutableListOf<Int>()
+        var dcnt:Any = 0
+        var value = 0
+        val daymyRef = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
+        val dayListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child("count").child(date).child("count").value==null){
+                    dcnt=0
+                }
+                else{
+                    dcnt = snapshot.child("count").child(date).child("count").value!!
+                }
+                var level:Any=0
+                for( i in 1 until dcnt.toString().toInt()){
+                    level = snapshot.child("diary").child(year).child(monthformatted)
+                        .child(dayformatted).child(i.toString()).child("level").value!!
+                    Log.d("daytest", "level : $level")
+                    dayList.add(level.toString().toInt())
+                }
+                day = dayList!!.average().toInt()
+                Log.d("daytest","day : $day")
+                value = day
+                mainPbDay.progress = value
+                Log.d("average", "progress = $mainPbDay.progress")
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        db.child(user!!.uid).addValueEventListener(dayListener)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
    private fun preDate(){//이전 날짜 조회

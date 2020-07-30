@@ -114,20 +114,15 @@ class MainFragment : Fragment() {
                     level = snapshot.child("diary").child(year).child(monthformatted).child(dayformatted).child(dcnt.toString()).child("level").value!!
                     Log.d("daytest","level : $level")
                     dayList.add(level.toString().toInt())
+
                 }
                 day = dayList!!.average()
-                Log.d("daytest","day : $day")
+                Log.d("daytest","f2day : $day")
+                mainPbDay.progress = day.toInt()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) {}
         }
-        db.child(user!!.uid).addValueEventListener(dayListener)
-
-        mainPbDay.progress = day.toInt()
-
-
+        db.child(user.uid).addValueEventListener(dayListener)
     }
 
 

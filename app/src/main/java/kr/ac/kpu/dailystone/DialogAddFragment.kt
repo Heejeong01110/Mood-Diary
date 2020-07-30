@@ -96,28 +96,22 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         Log.d("Han", "$cnt")
         val postValues: HashMap<String, Any> = HashMap()
         val postCounts: HashMap<String, Any> = HashMap()
-       // postValues["date"] = formatted
+        /*
         val myRefCount = db.child(user!!.uid).child("count").child(date)
         postCounts["count"] = 2          //카운트 조건 추가
         myRefCount.setValue(postCounts)
+        */
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                cnt = snapshot.child("count").value!!
-                var cnt1 = snapshot.childrenCount
+                
 
-                Log.d("Han", "$cnt")
-                val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted).child(cnt.toString())
-
-                postValues["level"] = level
-                postValues["diary"] = diary
-                myRefDiary.setValue(postValues)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         }
-        db.child(user!!.uid).child("count").child(date).addValueEventListener(postListener)
+        db.child(user!!.uid).addValueEventListener(postListener)
 
 
 

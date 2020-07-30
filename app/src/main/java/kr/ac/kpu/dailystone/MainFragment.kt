@@ -90,18 +90,6 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     /*
    private fun preDate(){//이전 날짜 조회
        var uUid:String = FirebaseAuth.getInstance().currentUser?.uid.toString()

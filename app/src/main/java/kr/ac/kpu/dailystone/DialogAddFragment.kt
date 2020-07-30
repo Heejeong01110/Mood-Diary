@@ -137,7 +137,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
 
         dhBtnYes.setOnClickListener {
             // 데이터베이스에 저장
-            onWriteDBPost()
+         
             dismiss()
         }
         dhBtnNo.setOnClickListener {
@@ -146,45 +146,6 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         }
     }
 
-    fun onWriteDBPost() {
-        db = Firebase.database.reference
-        var user = FirebaseAuth.getInstance().currentUser
-        var cnt : Any =3
-        level = dhEdHl.text.toString()
-        diary = dhEdDiary.text.toString()
-        //val myRef = database.getReference("posts")
-        //val myRef = database.getReference(user?.uid.toString())
-        Log.d("Han", "$cnt")
-        val postValues: HashMap<String, Any> = HashMap()
-        val postCounts: HashMap<String, Any> = HashMap()
-       // postValues["date"] = formatted
-        val myRefCount = db.child(user!!.uid).child("count").child(date)
-        postCounts["count"] = 2          //카운트 조건 추가
-        myRefCount.setValue(postCounts)
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                cnt = snapshot.child("count").value!!
-                var cnt1 = snapshot.childrenCount
-
-                Log.d("Han", "$cnt")
-                val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted).child(cnt.toString())
-
-                postValues["level"] = level
-                postValues["diary"] = diary
-                myRefDiary.setValue(postValues)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        }
-        db.child(user!!.uid).child("count").child(date).addValueEventListener(postListener)
-
-
-
-
-        Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
-    }
     /*
     fun readID(uid:String): String {
         db = Firebase.database.reference

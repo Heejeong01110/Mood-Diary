@@ -32,6 +32,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
     private lateinit var db: DatabaseReference
     private lateinit var level : Any
     private lateinit var diary : Any
+    var cnt:Any = 0
     private val current: LocalDate = LocalDate.now()
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
     private val formatted: String = current.format(formatter)
@@ -149,50 +150,40 @@ class DialogAddFragment(context: Context) : Dialog(context) {
             Toast.makeText(context,"취소",Toast.LENGTH_SHORT)
         }
     }
+
     fun onWriteDBPost() {
         db = Firebase.database.reference
         var user = FirebaseAuth.getInstance().currentUser
-        var cnt:Any = 0
+
         level = dhEdHl.text.toString()
         diary = dhEdDiary.text.toString()
         //val myRef = database.getReference("posts")
         //val myRef = database.getReference(user?.uid.toString())
-        Log.d("Han", "$cnt")
         val postValues: HashMap<String, Any> = HashMap()
         val postListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.child("count").child(date).child("count").value==null){
                     cnt=0
-                }
-                else{
+                }else{
                     cnt = snapshot.child("count").child(date).child("count").value!!
                 }
-
-                Log.d("Han", "cnt: $cnt")
                 val postCounts: HashMap<String, Any> = HashMap()
-                val myRefCount = db.child(user!!.uid).child("count").child(date)
-                postCounts["count"] = (cnt.toString().toInt()+1).toString()          //카운트 조건 추가
-                myRefCount.setValue(postCounts)
-
+                val myRefCount = db.child(user!!.uid).child("count").child(date).child("count")
+                //postCounts["count"] = (cnt.toString().toInt()+1).toString()          //카운트 조건 추가
+                myRefCount.setValue(cnt.toString().toInt() + 1)
                 val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
                     .child((cnt.toString().toInt()+1).toString())
                 postValues["level"] = level
                 postValues["diary"] = diary
                 myRefDiary.setValue(postValues)
-
-
+                Log.d("Han", "cnt: $cnt")
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         }
-
-
-        db.child(user!!.uid).addValueEventListener(postListener)
-
-
-
+        db.child(user!!.uid).addListenerForSingleValueEvent(postListener)
 
 
 

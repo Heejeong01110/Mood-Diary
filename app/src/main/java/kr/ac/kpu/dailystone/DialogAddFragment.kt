@@ -86,15 +86,8 @@ class DialogAddFragment(context: Context) : Dialog(context) {
                     dhEdHl.setText(progress.toString());
                     level = dhEdHl.text.toString()
             }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
         })
 
         dhEdHl.addTextChangedListener(object : TextWatcher{
@@ -139,10 +132,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         dhBtnYes.setOnClickListener {
             // 데이터베이스에 저장
             onWriteDBPost()
-
             Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
-
-
             dismiss()
         }
         dhBtnNo.setOnClickListener {
@@ -152,6 +142,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
     }
 
     fun onWriteDBPost() {
+        Log.d("daytest","dialog 저장 시작")
         db = Firebase.database.reference
         var user = FirebaseAuth.getInstance().currentUser
 
@@ -167,16 +158,17 @@ class DialogAddFragment(context: Context) : Dialog(context) {
                 }else{
                     cnt = snapshot.child("count").child(date).child("count").value!!
                 }
-                val postCounts: HashMap<String, Any> = HashMap()
-                val myRefCount = db.child(user!!.uid).child("count").child(date).child("count")
-                //postCounts["count"] = (cnt.toString().toInt()+1).toString()          //카운트 조건 추가
-                myRefCount.setValue(cnt.toString().toInt() + 1)
+
                 val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
                     .child((cnt.toString().toInt()+1).toString())
                 postValues["level"] = level
                 postValues["diary"] = diary
                 myRefDiary.setValue(postValues)
-                Log.d("Han", "cnt: $cnt")
+                Log.d("dialog ", "cnt: $cnt")
+
+                val myRefCount = db.child(user!!.uid).child("count").child(date).child("count")
+                myRefCount.setValue(cnt.toString().toInt() + 1)
+
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -188,6 +180,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
 
 
         Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
+        Log.d("daytest","dialog 저장 끝")
     }
     /*
     fun readID(uid:String): String {

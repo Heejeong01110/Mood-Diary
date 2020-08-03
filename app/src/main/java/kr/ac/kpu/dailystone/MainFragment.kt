@@ -40,13 +40,17 @@ class MainFragment : Fragment() {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
     private val formatted: String = current.format(formatter)
     var date = formatted.substring(2,8)
-    private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
-    private val yearformatted: String = current.format(formatterYear)
-    var year = yearformatted.substring(2,4)
-    private val formatterMonth : DateTimeFormatter = DateTimeFormatter.ofPattern("MM")
-    private val monthformatted: String = current.format(formatterMonth)
-    private val formatterDay : DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
-    private val dayformatted: String = current.format(formatterDay)
+    var year = formatted.substring(2,4)
+    var monthformatted = formatted.substring(4,6)
+    val dayformatted: String = formatted.substring(6,8)
+    //private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
+    //private val yearformatted: String = current.format(formatterYear)
+    //private val yearformatted: String = current.format(formatter)
+    //private val formatterMonth : DateTimeFormatter = DateTimeFormatter.ofPattern("MM")
+    //private val monthformatted: String = current.format(formatterMonth)
+    //private val monthformatted: String = current.format(formatter)
+    //private val formatterDay : DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
+    //private val dayformatted: String = current.format(formatterDay)
 
 
 
@@ -69,14 +73,6 @@ class MainFragment : Fragment() {
             var dialog = DialogSadAddFragment(it.context)
             dialog.show()
         }
-        /* val args = Bundle()
-         args.putString("key", "value")
-         val dialogFragment = DialogFragment()
-         dialogFragment.setArguments(args)
-         fragmentManager?.let { dialogFragment.show(it, "Sample Dialog Fragment") }*/
-
-
-
     }
 
     override fun onCreateView(
@@ -107,23 +103,22 @@ class MainFragment : Fragment() {
                     dcnt = snapshot.child("count").child(date).child("count").value!!
                 }
                 var level:Any=0
-                for( i in 1 until dcnt.toString().toInt()){
+                for( i in 1 until dcnt.toString().toInt()+1){
                     level = snapshot.child("diary").child(year).child(monthformatted)
                         .child(dayformatted).child(i.toString()).child("level").value!!
-                    Log.d("daytest", "level : $level")
+                    Log.d("daytest", "i : $i, level : $level")
                     dayList.add(level.toString().toInt())
                 }
                 day = dayList!!.average().toInt()
+                Log.d("daytest","dcnt : $dcnt")
                 Log.d("daytest","day : $day")
                 value = day
                 mainPbDay.progress = value
-                Log.d("average", "progress = $mainPbDay.progress")
             }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) { }
         }
         db.child(user!!.uid).addValueEventListener(dayListener)
+        //db.child(user!!.uid).addListenerForSingleValueEvent(dayListener)
     }
 
 

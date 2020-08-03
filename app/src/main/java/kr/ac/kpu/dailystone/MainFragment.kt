@@ -14,7 +14,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.time.LocalDate
+import java.time.Month
 import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.math.roundToInt
 
 
@@ -37,12 +39,12 @@ class MainFragment : Fragment() {
 
     //date
     private val current: LocalDate = LocalDate.now()
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-    private val formatted: String = current.format(formatter)
+    private var formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+    private var formatted: String = current.format(formatter)
     var date = formatted.substring(2,8)
     var year = formatted.substring(2,4)
     var monthformatted = formatted.substring(4,6)
-    val dayformatted: String = formatted.substring(6,8)
+    var dayformatted: String = formatted.substring(6,8)
     //private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
     //private val yearformatted: String = current.format(formatterYear)
     //private val yearformatted: String = current.format(formatter)
@@ -62,7 +64,7 @@ class MainFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
-        //preDate()
+
         ProgressView()
 
         mainBtnHappy.setOnClickListener {
@@ -72,6 +74,14 @@ class MainFragment : Fragment() {
         mainBtnSad.setOnClickListener {
             var dialog = DialogSadAddFragment(it.context)
             dialog.show()
+        }
+        mainBtnPre.setOnClickListener {
+            preDate()
+            Log.d("predatetest", "date : $date")
+        }
+        mainBtnNext.setOnClickListener {
+            nextDate()
+            Log.d("predatetest", "date : $date")
         }
     }
 
@@ -118,45 +128,31 @@ class MainFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) { }
         }
         db.child(user!!.uid).addValueEventListener(dayListener)
-        //db.child(user!!.uid).addListenerForSingleValueEvent(dayListener)
+        db.child(user!!.uid).addListenerForSingleValueEvent(dayListener)
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    /*
    private fun preDate(){//이전 날짜 조회
-       var uUid:String = FirebaseAuth.getInstance().currentUser?.uid.toString()
-       val dateRef:DatabaseReference = database.getReference(uUid)
-
-       // Read from the database
-       /*
-       dateRef.addValueEventListener(object : ValueEventListener {
-           override fun onDataChange(dataSnapshot: DataSnapshot) {
-               val value =dataSnapshot?.value.toString()
-               mainTvDate.setText(value)
-               Toast.makeText(applicationContext,"Successed to read value.",
-                   Toast.LENGTH_LONG).show()
-           }
-
-           override fun onCancelled(error: DatabaseError) {
-               // Failed to read value
-               Toast.makeText(applicationContext, "Failed to read value.",
-                   Toast.LENGTH_LONG).show()
-           }
-       })
-
-        */
+       var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())
+       var minusDayNow = ld.plusDays(-1)
+       var formatted2 = minusDayNow.format(formatter)
+       date = formatted2.substring(2,8)
+       year = formatted2.substring(2,4)
+       monthformatted = formatted2.substring(4,6)
+       dayformatted = formatted2.substring(6,8)
+       mainTvDate.text = date
+       ProgressView()
    }
-   */
 
+    private fun nextDate(){//이전 날짜 조회
+        var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())
+        var plusDayNow = ld.plusDays(1)
+        var formatted2 = plusDayNow.format(formatter)
+        date = formatted2.substring(2,8)
+        year = formatted2.substring(2,4)
+        monthformatted = formatted2.substring(4,6)
+        dayformatted = formatted2.substring(6,8)
+        mainTvDate.text = date
+        ProgressView()
+    }
 }

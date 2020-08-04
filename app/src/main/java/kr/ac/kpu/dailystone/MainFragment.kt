@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -68,8 +69,10 @@ class MainFragment : Fragment() {
         ProgressView()
 
         mainBtnHappy.setOnClickListener {
-            var dialog = DialogAddFragment(it.context)
+
+            var dialog = DialogAddFragment(it.context,date)
             dialog.show()
+
         }
         mainBtnSad.setOnClickListener {
             var dialog = DialogSadAddFragment(it.context)

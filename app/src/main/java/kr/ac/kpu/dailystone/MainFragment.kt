@@ -68,6 +68,8 @@ class MainFragment : Fragment() {
 
         ProgressView()
 
+        mainTvDate.text = date
+
         mainBtnHappy.setOnClickListener {
 
             var dialog = DialogAddFragment(it.context,date)
@@ -120,9 +122,9 @@ class MainFragment : Fragment() {
                     level = snapshot.child("diary").child(year).child(monthformatted)
                         .child(dayformatted).child(i.toString()).child("level").value!!
                     Log.d("daytest", "i : $i, level : $level")
-                    dayList.add(level.toString().toInt())
+                    dayList.add(i-1,level.toString().toInt())
                 }
-                day = dayList!!.average().toInt()
+                day = dayList.average().toInt()
                 Log.d("daytest","dcnt : $dcnt")
                 Log.d("daytest","day : $day")
                 value = day
@@ -130,10 +132,8 @@ class MainFragment : Fragment() {
             }
             override fun onCancelled(error: DatabaseError) { }
         }
-        db.child(user!!.uid).addValueEventListener(dayListener)
-        db.child(user!!.uid).addListenerForSingleValueEvent(dayListener)
+        db.child(user.uid).addValueEventListener(dayListener)
     }
-
 
    private fun preDate(){//이전 날짜 조회
        var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())

@@ -46,17 +46,6 @@ class MainFragment : Fragment() {
     var year = formatted.substring(2,4)
     var monthformatted = formatted.substring(4,6)
     var dayformatted: String = formatted.substring(6,8)
-    //private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
-    //private val yearformatted: String = current.format(formatterYear)
-    //private val yearformatted: String = current.format(formatter)
-    //private val formatterMonth : DateTimeFormatter = DateTimeFormatter.ofPattern("MM")
-    //private val monthformatted: String = current.format(formatterMonth)
-    //private val monthformatted: String = current.format(formatter)
-    //private val formatterDay : DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
-    //private val dayformatted: String = current.format(formatterDay)
-
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +55,8 @@ class MainFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
 
-        ProgressView()
+        //ProgressView()
+        readCount()
 
         mainTvDate.text = date
 
@@ -82,11 +72,9 @@ class MainFragment : Fragment() {
         }
         mainBtnPre.setOnClickListener {
             preDate()
-            Log.d("predatetest", "date : $date")
         }
         mainBtnNext.setOnClickListener {
             nextDate()
-            Log.d("predatetest", "date : $date")
         }
     }
 
@@ -102,40 +90,54 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun ProgressView(){
+    private fun readCount(){
+        var user = FirebaseAuth.getInstance().currentUser
+        var dcnt:Any = 0
+
+        val dayListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.value==null){
+                    dcnt=0
+                    mainPbDay.progress = 0
+                }
+                else{
+                    dcnt = snapshot.value!!
+                    //일별 평균 level 출력
+                    readLevel(dcnt.toString().toInt())
+                }
+            }
+            override fun onCancelled(error: DatabaseError) { }
+        }
+        db.child(user!!.uid).child("count").child(date).child("count")
+            .addValueEventListener(dayListener)
+    }
+
+    private fun readLevel(dcnt:Int){
         var user = FirebaseAuth.getInstance().currentUser
         var day:Int = 50
         var dayList = mutableListOf<Int>()
-        var dcnt:Any = 0
         var value = 0
-        val daymyRef = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
+
         val dayListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.child("count").child(date).child("count").value==null){
-                    dcnt=0
-                }
-                else{
-                    dcnt = snapshot.child("count").child(date).child("count").value!!
-                }
                 var level:Any=0
-                for( i in 1 until dcnt.toString().toInt()+1){
-                    level = snapshot.child("diary").child(year).child(monthformatted)
-                        .child(dayformatted).child(i.toString()).child("level").value!!
-                    Log.d("daytest", "i : $i, level : $level")
-                    dayList.add(i-1,level.toString().toInt())
+                for( i in 0 until dcnt){
+                    level = snapshot.child((i+1).toString()).child("level").value!!
+                    dayList.add(i,level.toString().toInt())
                 }
                 day = dayList.average().toInt()
-                Log.d("daytest","dcnt : $dcnt")
-                Log.d("daytest","day : $day")
                 value = day
                 mainPbDay.progress = value
             }
             override fun onCancelled(error: DatabaseError) { }
         }
-        db.child(user.uid).addValueEventListener(dayListener)
+        db.child(user!!.uid).child("diary").child(year).child(monthformatted)
+            .child(dayformatted).addListenerForSingleValueEvent(dayListener)
+
     }
 
    private fun preDate(){//이전 날짜 조회
+
        var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())
        var minusDayNow = ld.plusDays(-1)
        var formatted2 = minusDayNow.format(formatter)
@@ -144,10 +146,10 @@ class MainFragment : Fragment() {
        monthformatted = formatted2.substring(4,6)
        dayformatted = formatted2.substring(6,8)
        mainTvDate.text = date
-       ProgressView()
+       readCount()
    }
 
-    private fun nextDate(){//이전 날짜 조회
+    private fun nextDate(){//다음 날짜 조회
         var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())
         var plusDayNow = ld.plusDays(1)
         var formatted2 = plusDayNow.format(formatter)
@@ -156,6 +158,6 @@ class MainFragment : Fragment() {
         monthformatted = formatted2.substring(4,6)
         dayformatted = formatted2.substring(6,8)
         mainTvDate.text = date
-        ProgressView()
+        readCount()
     }
 }

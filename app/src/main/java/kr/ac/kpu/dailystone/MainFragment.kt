@@ -1,7 +1,5 @@
 package kr.ac.kpu.dailystone
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -16,39 +15,47 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.time.LocalDate
+import java.time.Month
 import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.math.roundToInt
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainFragment : Fragment() {
-    companion object { // 상수 역할
+   companion object { // 상수 역할
 
-        fun newInstance(): MainFragment {
+       fun newInstance(): MainFragment {
             return MainFragment()
         }
     }
-    var lock = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     private var mAuth: FirebaseAuth? = null //auth
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     private lateinit var db: DatabaseReference
 
     //date
     private val current: LocalDate = LocalDate.now()
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-    private val formatted: String = current.format(formatter)
-    var date = formatted.substring(2, 8)
-    private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
-    private val yearformatted: String = current.format(formatterYear)
-    var year = yearformatted.substring(2, 4)
-    private val formatterMonth: DateTimeFormatter = DateTimeFormatter.ofPattern("MM")
-    private val monthformatted: String = current.format(formatterMonth)
-    private val formatterDay: DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
-    private val dayformatted: String = current.format(formatterDay)
+    private var formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+    private var formatted: String = current.format(formatter)
+    var date = formatted.substring(2,8)
+    var year = formatted.substring(2,4)
+    var monthformatted = formatted.substring(4,6)
+    var dayformatted: String = formatted.substring(6,8)
+    //private val formatterYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
+    //private val yearformatted: String = current.format(formatterYear)
+    //private val yearformatted: String = current.format(formatter)
+    //private val formatterMonth : DateTimeFormatter = DateTimeFormatter.ofPattern("MM")
+    //private val monthformatted: String = current.format(formatterMonth)
+    //private val monthformatted: String = current.format(formatter)
+    //private val formatterDay : DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
+    //private val dayformatted: String = current.format(formatterDay)
+
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -58,24 +65,27 @@ class MainFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
-        //preDate()
-        //ProgressView()
+
+        ProgressView()
 
         mainBtnHappy.setOnClickListener {
-            var dialog = DialogAddFragment(it.context)
+
+            var dialog = DialogAddFragment(it.context,date)
             dialog.show()
+
         }
         mainBtnSad.setOnClickListener {
             var dialog = DialogSadAddFragment(it.context)
             dialog.show()
         }
-        /* val args = Bundle()
-         args.putString("key", "value")
-         val dialogFragment = DialogFragment()
-         dialogFragment.setArguments(args)
-         fragmentManager?.let { dialogFragment.show(it, "Sample Dialog Fragment") }*/
-
-
+        mainBtnPre.setOnClickListener {
+            preDate()
+            Log.d("predatetest", "date : $date")
+        }
+        mainBtnNext.setOnClickListener {
+            nextDate()
+            Log.d("predatetest", "date : $date")
+        }
     }
 
     override fun onCreateView(
@@ -83,82 +93,69 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_main,container,false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainTvDate.text = "$current"
-        ProgressView()
-    }
-
-
-
-    fun ProgressView() {
+    private fun ProgressView(){
         var user = FirebaseAuth.getInstance().currentUser
-        var day: Int = 50
+        var day:Int = 50
         var dayList = mutableListOf<Int>()
-        var dcnt: Any = 0
-        var value: Int? = 0
-        //val daymyRef = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
+        var dcnt:Any = 0
+        var value = 0
+        val daymyRef = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
         val dayListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.child("count").child(date).child("count").value == null) {
-                    dcnt = 0
-                } else {
+                if(snapshot.child("count").child(date).child("count").value==null){
+                    dcnt=0
+                }
+                else{
                     dcnt = snapshot.child("count").child(date).child("count").value!!
                 }
-                var level: Any = 0
-                for (i in 1 until dcnt.toString().toInt() + 1) {
+                var level:Any=0
+                for( i in 1 until dcnt.toString().toInt()+1){
                     level = snapshot.child("diary").child(year).child(monthformatted)
                         .child(dayformatted).child(i.toString()).child("level").value!!
-                    Log.d("daytest", "i: $i level : $level")
+                    Log.d("daytest", "i : $i, level : $level")
                     dayList.add(level.toString().toInt())
                 }
                 day = dayList!!.average().toInt()
-                Log.d("daytest", "day : $day")
+                Log.d("daytest","dcnt : $dcnt")
+                Log.d("daytest","day : $day")
                 value = day
-                //mainPbDay.progress = value
-                mainPbDay?.progress = value as Int
-                Log.d("average", "progress = $value")
+                mainPbDay.progress = value
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(error: DatabaseError) { }
         }
         db.child(user!!.uid).addValueEventListener(dayListener)
-        // db.child(user!!.uid).addListenerForSingleValueEvent(dayListener)
+        db.child(user!!.uid).addListenerForSingleValueEvent(dayListener)
     }
 
 
-    /*
    private fun preDate(){//이전 날짜 조회
-       var uUid:String = FirebaseAuth.getInstance().currentUser?.uid.toString()
-       val dateRef:DatabaseReference = database.getReference(uUid)
-
-       // Read from the database
-       /*
-       dateRef.addValueEventListener(object : ValueEventListener {
-           override fun onDataChange(dataSnapshot: DataSnapshot) {
-               val value =dataSnapshot?.value.toString()
-               mainTvDate.setText(value)
-               Toast.makeText(applicationContext,"Successed to read value.",
-                   Toast.LENGTH_LONG).show()
-           }
-
-           override fun onCancelled(error: DatabaseError) {
-               // Failed to read value
-               Toast.makeText(applicationContext, "Failed to read value.",
-                   Toast.LENGTH_LONG).show()
-           }
-       })
-
-        */
+       var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())
+       var minusDayNow = ld.plusDays(-1)
+       var formatted2 = minusDayNow.format(formatter)
+       date = formatted2.substring(2,8)
+       year = formatted2.substring(2,4)
+       monthformatted = formatted2.substring(4,6)
+       dayformatted = formatted2.substring(6,8)
+       mainTvDate.text = date
+       ProgressView()
    }
-   */
+
+    private fun nextDate(){//이전 날짜 조회
+        var ld : LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(),dayformatted.toInt())
+        var plusDayNow = ld.plusDays(1)
+        var formatted2 = plusDayNow.format(formatter)
+        date = formatted2.substring(2,8)
+        year = formatted2.substring(2,4)
+        monthformatted = formatted2.substring(4,6)
+        dayformatted = formatted2.substring(6,8)
+        mainTvDate.text = date
+        ProgressView()
+    }
 }

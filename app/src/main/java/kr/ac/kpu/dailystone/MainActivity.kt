@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            AppLockConst.ENABLE_PASSLOCK ->
+           /* AppLockConst.ENABLE_PASSLOCK ->
                 if (resultCode == Activity.RESULT_OK) {
                     Toast.makeText(this, "암호 설정 완료", Toast.LENGTH_SHORT).show()
                     init()
@@ -66,8 +66,7 @@ class MainActivity : AppCompatActivity() {
                 if (resultCode == Activity.RESULT_OK) {
                     Toast.makeText(this, "암호 변경 완료", Toast.LENGTH_SHORT).show()
                     lock = false
-                }
-
+                }*/
             AppLockConst.UNLOCK_PASSWORD ->
                 if (resultCode == Activity.RESULT_OK) {
                     Toast.makeText(this, "잠금 해제 완료", Toast.LENGTH_SHORT).show()

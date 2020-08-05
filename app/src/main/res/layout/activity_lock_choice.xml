@@ -18,7 +18,7 @@
         android:id="@+id/btnDisable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2차 비밀번호 설정 비활성화"
+        android:text="2차 비밀번호 설정 삭제"
       />
     <Button
         android:id="@+id/btnPassChange"

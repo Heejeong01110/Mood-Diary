@@ -2,6 +2,7 @@ package kr.ac.kpu.dailystone
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.renderscript.Sampler
@@ -49,7 +50,7 @@ class DialogAddFragment(context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_happy)
-
+        //val mDialog = DialogAddFragment(context);
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().currentUser
 
@@ -80,7 +81,6 @@ class DialogAddFragment(context: Context) : Dialog(context) {
             level = dhEdHl.text.toString()
 
         }
-
         dhSbar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     dhEdHl.setText(progress.toString());
@@ -139,17 +139,22 @@ class DialogAddFragment(context: Context) : Dialog(context) {
         dhBtnYes.setOnClickListener {
             // 데이터베이스에 저장
             onWriteDBPost()
-
             Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
 
 
             dismiss()
         }
         dhBtnNo.setOnClickListener {
-            dismiss();
+            dismiss()
             Toast.makeText(context,"취소",Toast.LENGTH_SHORT)
         }
     }
+
+    /*override fun setOnDismissListener(listener: DialogInterface.OnDismissListener?) {
+        super.setOnDismissListener(listener)
+        MainFragment().ProgressView()
+        Log.d("dialog", "start")
+    }*/
 
     fun onWriteDBPost() {
         db = Firebase.database.reference
@@ -167,28 +172,31 @@ class DialogAddFragment(context: Context) : Dialog(context) {
                 }else{
                     cnt = snapshot.child("count").child(date).child("count").value!!
                 }
-                val postCounts: HashMap<String, Any> = HashMap()
-                val myRefCount = db.child(user!!.uid).child("count").child(date).child("count")
-                //postCounts["count"] = (cnt.toString().toInt()+1).toString()          //카운트 조건 추가
-                myRefCount.setValue(cnt.toString().toInt() + 1)
                 val myRefDiary = db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
                     .child((cnt.toString().toInt()+1).toString())
                 postValues["level"] = level
                 postValues["diary"] = diary
                 myRefDiary.setValue(postValues)
                 Log.d("Han", "cnt: $cnt")
+                val postCounts: HashMap<String, Any> = HashMap()
+                val myRefCount = db.child(user!!.uid).child("count").child(date).child("count")
+                //postCounts["count"] = (cnt.toString().toInt()+1).toString()          //카운트 조건 추가
+                myRefCount.setValue(cnt.toString().toInt() + 1)
+
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         }
+
         db.child(user!!.uid).addListenerForSingleValueEvent(postListener)
 
 
 
         Toast.makeText(context,"저장 완료",Toast.LENGTH_SHORT)
     }
+
     /*
     fun readID(uid:String): String {
         db = Firebase.database.reference

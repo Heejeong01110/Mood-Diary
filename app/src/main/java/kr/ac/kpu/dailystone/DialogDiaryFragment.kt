@@ -32,6 +32,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.pow
 
 @RequiresApi(Build.VERSION_CODES.O)
 class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
@@ -117,26 +118,55 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         LinearDraw.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
             val width = LinearDraw.width
             val height = LinearDraw.height
-            val iconx = ddIvicon.x
-            val icony = ddIvicon.y
-            //ddIvicon.translationX = width/2.toFloat() - ddIvicon.width/2
-            //ddIvicon.translationY = height/2.toFloat() - ddIvicon.height/2
+            val iconx = LinearDraw.width/2.toFloat() - ddIvicon.width/2
+            val icony = LinearDraw.height/2.toFloat() - ddIvicon.height/2
+
+            var radius = (motionEvent.getX()-LinearDraw.width/2.toFloat() )*(motionEvent.getX()-LinearDraw.width/2.toFloat() ) +
+                    (motionEvent.getY()-LinearDraw.height/2.toFloat() )*(motionEvent.getY()-LinearDraw.height/2.toFloat())
 
             var act = motionEvent.action
-            Toast.makeText(context, "$tempx", Toast.LENGTH_SHORT).show()
             when (act){
                 MotionEvent.ACTION_DOWN -> { //처음 눌렀을 때
                     ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
                     ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
                 }
                 MotionEvent.ACTION_MOVE -> { //누르고 움직였을 때
-                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
-                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
+                    if((width/2)*(width/2) >= radius){
+                        ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
+                        ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
+
+                        if(motionEvent.getY() < LinearDraw.height/2.toFloat()) {
+                            if((width / 12) * (width / 12) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                            } else if ((width / 6) * (width / 6) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.happy_level3)
+                            } else if ((width / 3) * (width / 3) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.happy_level2)
+                            } else if ((width / 2) * (width / 2) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.happy_level1)
+                            }
+                        }else{
+                            if((width / 12) * (width / 12) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                            } else if ((width / 6) * (width / 6) >= radius) {
+                                //ddIvicon.setImageResource(R.drawable.happy_level3)
+                                Log.d("position", "ㅠㅠ3")
+                            } else if ((width / 3) * (width / 3) >= radius) {
+                                //ddIvicon.setImageResource(R.drawable.happy_level2)
+                                Log.d("position", "ㅠㅠ2")
+
+                            } else if ((width / 2) * (width / 2) >= radius) {
+                                //ddIvicon.setImageResource(R.drawable.happy_level1)
+                                Log.d("position", "ㅠㅠ1")
+
+                            }
+                        }
+                    }
                 }
                 MotionEvent.ACTION_UP -> { //누른걸 땠을 때
-                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
-                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
-
+                    ddIvicon.setImageResource(R.drawable.dialogicon)
+                    ddIvicon.x = LinearDraw.width/2.toFloat() - ddIvicon.width/2
+                    ddIvicon.y = LinearDraw.height/2.toFloat() - ddIvicon.height/2
                 }
 
             }

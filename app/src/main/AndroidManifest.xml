@@ -21,6 +21,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".LockActivity" />
         <activity android:name=".AppPasswordActivity"/>
+        <activity android:name=".ChangeActivity"/>
     </application>
 
 </manifest>

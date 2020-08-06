@@ -62,8 +62,11 @@ class MainFragment : Fragment() {
 
         mainBtnHappy.setOnClickListener {
 
-            var dialog = DialogAddFragment(it.context,date)
+            //var dialog = DialogAddFragment(it.context,date)
+            var dialog = DialogDiaryFragment(it.context,date)
             dialog.show()
+
+
 
         }
         mainBtnSad.setOnClickListener {

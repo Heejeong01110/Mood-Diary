@@ -109,59 +109,33 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "RestrictedApi")
     private fun drawIv(){
-        /*
-        LinearDraw.setOnTouchListener { v, event ->
-            val width = LinearDraw.width
-            val height = LinearDraw.height
-            val iconx = ddIvicon.x
-            val icony = ddIvicon.y
-            //ddIvicon.translationX = width/2.toFloat() - ddIvicon.width/2
-            //ddIvicon.translationY = height/2.toFloat() - ddIvicon.height/2
-            when(event.action){
-                MotionEvent.ACTION_MOVE ->{
-                    ddIvicon.x = event.rawX
-                    ddIvicon.y = event.rawY
-                }
-
-                MotionEvent.ACTION_UP -> {
-                    ddIvicon.x = iconx
-                    ddIvicon.y = icony
-                }
-
-            }
-
-
-            true
-        }
-         */
-        var disp: DisplayMetrics = getApplicationContext().resources.displayMetrics
-        val deviceW = disp.widthPixels
-        val deviceH = disp.heightPixels
-        val iconx:Float = deviceW/2.toFloat()
-        val icony = deviceH/2.toFloat()
         var levelX:Int=0
         var levelY:Int=0
         var tempx = ddIvicon.x
 
 
         LinearDraw.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
+            val width = LinearDraw.width
+            val height = LinearDraw.height
+            val iconx = ddIvicon.x
+            val icony = ddIvicon.y
+            //ddIvicon.translationX = width/2.toFloat() - ddIvicon.width/2
+            //ddIvicon.translationY = height/2.toFloat() - ddIvicon.height/2
+
             var act = motionEvent.action
             Toast.makeText(context, "$tempx", Toast.LENGTH_SHORT).show()
             when (act){
                 MotionEvent.ACTION_DOWN -> { //처음 눌렀을 때
-                    ddIvicon.x = motionEvent.rawX -(deviceW-view.width)/2-ddIvicon.width/2
-                    ddIvicon.y = motionEvent.rawY - (deviceH-view.height)/2+ddIvicon.height/2
+                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
+                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
                 }
                 MotionEvent.ACTION_MOVE -> { //누르고 움직였을 때
-                    ddIvicon.x = motionEvent.rawX -(deviceW-view.width)/2-ddIvicon.width/2
-                    ddIvicon.y = motionEvent.rawY - (deviceH-view.height)/2+ddIvicon.height/2
+                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
+                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
                 }
                 MotionEvent.ACTION_UP -> { //누른걸 땠을 때
-                    levelX = (ddIvicon.x - iconx).toInt()
-                    levelY = (ddIvicon.y - icony).toInt()
-                    ddIvicon.x = iconx-(deviceW-view.width)/2-ddIvicon.width/2
-                    ddIvicon.y = icony
-                    Toast.makeText(context, "levelx : $levelX levely : $levelY", Toast.LENGTH_SHORT).show()
+                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
+                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
 
                 }
 

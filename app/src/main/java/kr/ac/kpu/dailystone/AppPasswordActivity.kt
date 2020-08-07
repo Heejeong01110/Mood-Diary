@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_lock.*
 
@@ -146,7 +147,7 @@ class AppPasswordActivity : AppCompatActivity() {
                 }
             }
 
-            AppLockConst.DISABLE_PASSLOCK -> { // 2차비밀번호 비활성화
+            AppLockConst.DISABLE_PASSLOCK -> { // 2차비밀번호 삭제
                 if (AppLock(this).isPassLockSet()) {
                     if (AppLock(this).checkPassLock((inputedPassword()))) {
                         AppLock(this).removePassLock()
@@ -172,8 +173,11 @@ class AppPasswordActivity : AppCompatActivity() {
                 }
 
             AppLockConst.CHANGE_PASSWORD -> {
+
+                //if (oldPwd == inputedPassword() && !changePwdUnlock) {
                 if (AppLock(this).checkPassLock(inputedPassword()) && !changePwdUnlock) {
                     onClear()
+                    Toast.makeText(this,"2차 비밀번호 변경",Toast.LENGTH_SHORT).show()
                     changePwdUnlock = true
                     etInputInfo.text = "새로운 비밀번호 입력"
                 } else if (changePwdUnlock) {
@@ -187,12 +191,16 @@ class AppPasswordActivity : AppCompatActivity() {
                             setResult(Activity.RESULT_OK)
                             finish()
                         } else {
-                            etInputInfo.text = "비밀번호가 틀립니다"
-                            changePwdUnlock = false
                             onClear()
+                            oldPwd = ""
+                            etInputInfo.text = "현재 비밀번호 다시 입력"
+                            changePwdUnlock = false
                         }
-
                     }
+                } else {
+                    etInputInfo.text = "비밀번호가 틀립니다"
+                    changePwdUnlock = false
+                    onClear()
                 }
             }
         }

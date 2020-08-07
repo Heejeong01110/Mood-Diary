@@ -36,7 +36,7 @@ class LockActivity : AppCompatActivity() {
         //2차 비밀번호 변경 눌렀을 경우
         btnPassChange.setOnClickListener {
             val intent = Intent(this, AppPasswordActivity::class.java).apply {
-                putExtra(type, AppLockConst.CHANGE_PASSWORD)
+                putExtra(AppLockConst.type, AppLockConst.CHANGE_PASSWORD)
             }
             startActivityForResult(intent, AppLockConst.CHANGE_PASSWORD)
         }

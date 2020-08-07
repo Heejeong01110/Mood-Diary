@@ -38,7 +38,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <GridLayout
-        android:id="@+id/monthGrid"
+        android:id="@+id/monthGriddetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="5"

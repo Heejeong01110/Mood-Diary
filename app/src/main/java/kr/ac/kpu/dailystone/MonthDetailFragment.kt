@@ -1,21 +1,17 @@
 package kr.ac.kpu.dailystone
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.res.Resources
-import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -24,6 +20,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.dialog_diary.*
 import kotlinx.android.synthetic.main.fragment_month.view.*
 import kotlinx.android.synthetic.main.fragment_month_detail.view.*
 import kotlinx.android.synthetic.main.fragment_month_detail.view.tvOutputMonth
@@ -76,32 +73,44 @@ class MonthDetailFragment : DialogFragment() {
 
         rootView.tvOutputMonth.text = selYear + "년" + selMonth + "월" + selDay + "일 "
         val postListener = object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
-                //rootView.monthGrid.removeAllViews()
+                rootView.monthGriddetail.removeAllViews()
                 val childCount = snapshot.childrenCount.toInt()
                 for (i in 1 until childCount + 1) {
                     Log.d("HAN", "check $i : ${snapshot.child("$i").hasChildren()}")
                     if(i<10){
                         if (snapshot.child("$i").hasChildren()) {
-                            val gv: GridLayout = rootView.findViewById(R.id.monthGrid)
+                            val gv: GridLayout = rootView.findViewById(R.id.monthGriddetail)
                             val iv: ImageView = ImageView(context)
                             iv.setImageResource(R.drawable.happy_level1)
                             val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
                             iv.layoutParams = params
                             iv.setOnClickListener {
                                 Toast.makeText(context, "clicked $i", Toast.LENGTH_SHORT).show()
+                                val dateSet = selYear + selMonth + selDay
+                                val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
+                                dialog.show()
+                                dialog.ddEdHl.setText(snapshot.child("$i").child("level").value.toString())
+                                dialog.ddEdDiary.setText(snapshot.child("$i").child("diary").value.toString())
                             }
                             gv.addView(iv)
                         }
                     }else {
                         if (snapshot.child("$i").hasChildren()) {
-                            val gv: GridLayout = rootView.findViewById(R.id.monthGrid)
+                            val gv: GridLayout = rootView.findViewById(R.id.monthGriddetail)
                             val iv: ImageView = ImageView(context)
                             iv.setImageResource(R.drawable.happy_level1)
                             val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
                             iv.layoutParams = params
                             iv.setOnClickListener {
                                 Toast.makeText(context, "clicked $i", Toast.LENGTH_SHORT).show()
+                                val dateSet = selYear + selMonth + selDay
+                                val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
+                                dialog.show()
+                                dialog.ddEdHl.setText(snapshot.child("$i").child("level").value.toString())
+                                dialog.ddEdDiary.setText(snapshot.child("$i").child("diary").value.toString())
+
                             }
                             gv.addView(iv)
                         }

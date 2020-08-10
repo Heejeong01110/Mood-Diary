@@ -126,7 +126,9 @@ class MainFragment : Fragment() {
                 var level:Any=0
                 for( i in 0 until dcnt){
                     level = snapshot.child((i+1).toString()).child("level").value!!
-                    dayList.add(i,level.toString().toInt())
+                    if(level !=""){
+                        dayList.add(i,level.toString().toInt())
+                    }
                 }
                 day = dayList.average().toInt()
                 value = day

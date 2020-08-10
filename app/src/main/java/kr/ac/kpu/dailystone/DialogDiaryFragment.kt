@@ -17,8 +17,11 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import com.firebase.ui.auth.AuthUI.getApplicationContext
 import com.firebase.ui.auth.data.model.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +45,7 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
     private lateinit var db: DatabaseReference
     private lateinit var level : Any
     private lateinit var diary : Any
+    private lateinit var bitmap: Bitmap
     var cnt:Any = 0
 
     private val current: LocalDate = LocalDate.now()
@@ -67,7 +71,7 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         monthformatted = date.substring(2,4)
         dayformatted = date.substring(4,6)
         Toast.makeText(context, "date $date", Toast.LENGTH_SHORT).show()
-        
+
         drawIv()
         /*
         ddEdHl.addTextChangedListener(object : TextWatcher {
@@ -110,16 +114,12 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "RestrictedApi")
     private fun drawIv(){
-        var levelX:Int=0
-        var levelY:Int=0
-        var tempx = ddIvicon.x
-
+        ddIvbackground.isDrawingCacheEnabled = true
+        ddIvbackground.buildDrawingCache()
 
         LinearDraw.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
-            val width = LinearDraw.width
-            val height = LinearDraw.height
-            val iconx = LinearDraw.width/2.toFloat() - ddIvicon.width/2
-            val icony = LinearDraw.height/2.toFloat() - ddIvicon.height/2
+            val width = LinearDraw.width-ddIvicon.width
+            val height = LinearDraw.height-ddIvicon.height
 
             var radius = (motionEvent.getX()-LinearDraw.width/2.toFloat() )*(motionEvent.getX()-LinearDraw.width/2.toFloat() ) +
                     (motionEvent.getY()-LinearDraw.height/2.toFloat() )*(motionEvent.getY()-LinearDraw.height/2.toFloat())
@@ -127,11 +127,13 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
             var act = motionEvent.action
             when (act){
                 MotionEvent.ACTION_DOWN -> { //처음 눌렀을 때
+                    changeIconColor(motionEvent)
                     ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
                     ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
                 }
                 MotionEvent.ACTION_MOVE -> { //누르고 움직였을 때
                     if((width/2)*(width/2) >= radius){//원 안을 눌렀을 때
+                        changeIconColor(motionEvent)
                         ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
                         ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
 
@@ -145,20 +147,18 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
                             } else if ((width / 2) * (width / 2) >= radius) {
                                 ddIvicon.setImageResource(R.drawable.happy_level1)
                             }
-                            Log.d("position","플러스 ${ddIvicon.x}, ${ddIvicon.y}")
-                        }else{if((width / 12) * (width / 12) >= radius) {
+                        }else{
+                            if((width / 12) * (width / 12) >= radius) {
                                 ddIvicon.setImageResource(R.drawable.dialogicon)
                             } else if ((width / 6) * (width / 6) >= radius) {
                                 Log.d("position", "ㅠㅠ3")
                             } else if ((width / 3) * (width / 3) >= radius) {
                                 Log.d("position", "ㅠㅠ2")
-
                             } else if ((width / 2) * (width / 2) >= radius) {
-                                Log.d("position", "ㅠㅠ1")
-
+                               Log.d("position", "ㅠㅠ1")
                             }
-                            Log.d("position","마이너스 ${ddIvicon.x}, ${ddIvicon.y}")
                         }
+
                     }else{//원 밖에 있을 때
                         val cx = LinearDraw.width/2.toFloat()
                         val cy = LinearDraw.height/2.toFloat()
@@ -166,32 +166,21 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
                         var my = motionEvent.getY()
                         var middleX =
                             (width / 2) * (height / 2) * (1 / (1 + (my - cy) / (mx - cx) * (my - cy) / (mx - cx)))
-                        if(motionEvent.getX() >= width/2) {
-                            var realX = sqrt(middleX) + cx
-                            var realY = (my - cy) / (mx - cx) * (realX - cx) + cy
+                        var realX:Float
+                        var realY:Float
+
+                        if(mx >= cx) {
+                            realX = sqrt(middleX) + cx
+                            realY = (my - cy) / (mx - cx) * (realX - cx) + cy
                             ddIvicon.setImageResource(R.drawable.dialogicon)
-
-                            if(motionEvent.getY()>=height/2){ //둘다양수
-                                ddIvicon.x = realX-ddIvicon.width/2
-                                ddIvicon.y = realY-ddIvicon.height/2
-                            }else{//x양y음
-                                ddIvicon.x = realX-ddIvicon.width/2
-                                ddIvicon.y = realY-ddIvicon.height/2
-                            }
-
                         }else {
-                            var realX = -sqrt(middleX) + cx
-                            var realY = (my - cy) / (mx - cx) * (realX - cx) + cy
+                            realX = -sqrt(middleX) + cx
+                            realY = (my - cy) / (mx - cx) * (realX - cx) + cy
                             ddIvicon.setImageResource(R.drawable.dialogicon)
-
-                            if(motionEvent.getY()>=height/2){//x음y양
-                                ddIvicon.x = realX-ddIvicon.width/2
-                                ddIvicon.y = realY-ddIvicon.height/2
-                            }else{//둘다음수
-                                ddIvicon.x = realX-ddIvicon.width/2
-                                ddIvicon.y = realY-ddIvicon.height/2
-                            }
                         }
+                        changeIconColor(motionEvent)
+                        ddIvicon.x = realX-ddIvicon.width/2
+                        ddIvicon.y = realY-ddIvicon.height/2
                     }
                 }
                 MotionEvent.ACTION_UP -> { //누른걸 땠을 때
@@ -199,13 +188,21 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
                     ddIvicon.x = LinearDraw.width/2.toFloat() - ddIvicon.width/2
                     ddIvicon.y = LinearDraw.height/2.toFloat() - ddIvicon.height/2
                 }
-
             }
             return@OnTouchListener true
         })
+    }
 
-
-
+    private fun changeIconColor(motionEvent:MotionEvent){
+        bitmap = ddIvbackground.drawingCache
+        if(motionEvent.x.toInt()<bitmap.width&&motionEvent.y.toInt()<bitmap.height&&motionEvent.y.toInt()>=0&&motionEvent.x.toInt()>=0){
+            val pixel = bitmap.getPixel(motionEvent.x.toInt(),motionEvent.y.toInt())
+            var r= Color.red(pixel)
+            var g= Color.green(pixel)
+            var b= Color.blue(pixel)
+            val hex = "#"+Integer.toHexString(pixel)
+            ddIvicon.setColorFilter(Color.rgb(r,g,b))
+        }
     }
 
 

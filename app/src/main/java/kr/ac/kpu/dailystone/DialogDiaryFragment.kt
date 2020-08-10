@@ -245,3 +245,149 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         db.child(user!!.uid).addListenerForSingleValueEvent(postListener)
     }
 }
+@RequiresApi(Build.VERSION_CODES.O)
+class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: String) : Dialog(context) {
+    private var mAuth: FirebaseAuth? = null
+    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+    private lateinit var db: DatabaseReference
+    private lateinit var level : Any
+    private lateinit var diary : Any
+    var cnt:Any = 0
+
+    private val current: LocalDate = LocalDate.now()
+
+    private var formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+    private var formatted: String = current.format(formatter)
+    var date = date
+    var year = formatted.substring(2,4)
+    var monthformatted = formatted.substring(4,6)
+    var dayformatted: String = formatted.substring(6,8)
+
+    var user: FirebaseUser?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.dialog_diary)
+        mAuth = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().currentUser
+
+        db= Firebase.database.reference
+
+        //date 받아오기
+        year = date.substring(0,2)
+        monthformatted = date.substring(2,4)
+        dayformatted = date.substring(4,6)
+        Toast.makeText(context, "date $date", Toast.LENGTH_SHORT).show()
+
+        //touch
+        drawIv()
+
+
+        ddBtnYes.setOnClickListener {
+            onWriteDBPost()
+            dismiss()
+        }
+        ddBtnNo.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "RestrictedApi")
+    private fun drawIv(){
+        var levelX:Int=0
+        var levelY:Int=0
+        var tempx = ddIvicon.x
+
+
+        LinearDraw.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
+            val width = LinearDraw.width
+            val height = LinearDraw.height
+            val iconx = LinearDraw.width/2.toFloat() - ddIvicon.width/2
+            val icony = LinearDraw.height/2.toFloat() - ddIvicon.height/2
+
+            var radius = (motionEvent.getX()-LinearDraw.width/2.toFloat() )*(motionEvent.getX()-LinearDraw.width/2.toFloat() ) +
+                    (motionEvent.getY()-LinearDraw.height/2.toFloat() )*(motionEvent.getY()-LinearDraw.height/2.toFloat())
+
+            var act = motionEvent.action
+            when (act){
+                MotionEvent.ACTION_DOWN -> { //처음 눌렀을 때
+                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
+                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
+                }
+                MotionEvent.ACTION_MOVE -> { //누르고 움직였을 때
+                    if((width/2)*(width/2) >= radius){
+                        ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
+                        ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
+
+                        if(motionEvent.getY() < LinearDraw.height/2.toFloat()) {
+                            if((width / 12) * (width / 12) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                            } else if ((width / 6) * (width / 6) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.happy_level3)
+                            } else if ((width / 3) * (width / 3) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.happy_level2)
+                            } else if ((width / 2) * (width / 2) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.happy_level1)
+                            }
+                        }else{
+                            if((width / 12) * (width / 12) >= radius) {
+                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                            } else if ((width / 6) * (width / 6) >= radius) {
+                                //ddIvicon.setImageResource(R.drawable.happy_level3)
+                                Log.d("position", "ㅠㅠ3")
+                            } else if ((width / 3) * (width / 3) >= radius) {
+                                //ddIvicon.setImageResource(R.drawable.happy_level2)
+                                Log.d("position", "ㅠㅠ2")
+
+                            } else if ((width / 2) * (width / 2) >= radius) {
+                                //ddIvicon.setImageResource(R.drawable.happy_level1)
+                                Log.d("position", "ㅠㅠ1")
+
+                            }
+                        }
+                    }
+                }
+                MotionEvent.ACTION_UP -> { //누른걸 땠을 때
+                    ddIvicon.setImageResource(R.drawable.dialogicon)
+                    ddIvicon.x = LinearDraw.width/2.toFloat() - ddIvicon.width/2
+                    ddIvicon.y = LinearDraw.height/2.toFloat() - ddIvicon.height/2
+                }
+
+            }
+            return@OnTouchListener true
+        })
+
+
+
+    }
+
+
+    private fun onWriteDBPost() {
+        db = Firebase.database.reference
+        var user = FirebaseAuth.getInstance().currentUser
+        level = ddEdHl.text.toString()
+        diary = ddEdDiary.text.toString()
+
+
+        val postValues: HashMap<String, Any> = HashMap()
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                val myRefDiary =
+                    db.child(user!!.uid).child("diary").child(year).child(monthformatted)
+                        .child(dayformatted)
+                        .child((modifyCnt).toString())
+                postValues["level"] = level
+                postValues["diary"] = diary
+                myRefDiary.setValue(postValues)
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        db.child(user!!.uid).addListenerForSingleValueEvent(postListener)
+    }
+}

@@ -85,7 +85,6 @@ class MonthFragment : Fragment() {
                             val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
                             iv.layoutParams = params
                             iv.setOnClickListener {
-                                Toast.makeText(context, "clicked $i", Toast.LENGTH_SHORT).show()
                                 val mDialog
                                         = MonthDetailFragment.newInstance(yearformatted, monthformatted,
                                     "0$i"
@@ -104,7 +103,6 @@ class MonthFragment : Fragment() {
                             val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
                             iv.layoutParams = params
                             iv.setOnClickListener {
-                                Toast.makeText(context, "clicked $i", Toast.LENGTH_SHORT).show()
                                 val mDialog
                                         = MonthDetailFragment.newInstance(yearformatted, monthformatted, "$i")
                                 fragmentManager?.let { it1 -> mDialog.show(it1,MonthDetailFragment.TAG) }

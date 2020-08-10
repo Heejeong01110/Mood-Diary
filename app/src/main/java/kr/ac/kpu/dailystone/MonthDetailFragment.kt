@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -87,7 +86,6 @@ class MonthDetailFragment : DialogFragment() {
                             val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
                             iv.layoutParams = params
                             iv.setOnClickListener {
-                                Toast.makeText(context, "clicked $i", Toast.LENGTH_SHORT).show()
                                 val dateSet = selYear + selMonth + selDay
                                 val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
                                 dialog.show()
@@ -104,7 +102,6 @@ class MonthDetailFragment : DialogFragment() {
                             val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
                             iv.layoutParams = params
                             iv.setOnClickListener {
-                                Toast.makeText(context, "clicked $i", Toast.LENGTH_SHORT).show()
                                 val dateSet = selYear + selMonth + selDay
                                 val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
                                 dialog.show()

@@ -43,8 +43,10 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
     private var mAuth: FirebaseAuth? = null
     val database : FirebaseDatabase = FirebaseDatabase.getInstance()
     private lateinit var db: DatabaseReference
-    private lateinit var level : Any
-    private lateinit var diary : Any
+    private var level : Any=""
+    private var diary : Any=""
+    private var emoticon : Any = 0
+    private var diaryColor : Any = 0
     private lateinit var bitmap: Bitmap
     var cnt:Any = 0
 
@@ -73,7 +75,6 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         Toast.makeText(context, "date $date", Toast.LENGTH_SHORT).show()
 
         drawIv()
-        /*
         ddEdHl.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 try {
@@ -100,12 +101,15 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
         })
 
-         */
-
-
         ddBtnYes.setOnClickListener {
-            onWriteDBPost()
-            dismiss()
+            level = ddEdHl.text.toString()
+            diary = ddEdDiary.text.toString()
+            if(emoticon==0||diaryColor==0||level==""||diary==""){
+                Toast.makeText(context,"다시 입력해주세요",Toast.LENGTH_SHORT).show()
+            }else{
+                onWriteDBPost()
+                dismiss()
+            }
         }
         ddBtnNo.setOnClickListener {
             dismiss()
@@ -126,12 +130,7 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
             var act = motionEvent.action
             when (act){
-                MotionEvent.ACTION_DOWN -> { //처음 눌렀을 때
-                    changeIconColor(motionEvent)
-                    ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
-                    ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
-                }
-                MotionEvent.ACTION_MOVE -> { //누르고 움직였을 때
+                MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN -> { //누르고 움직였을 때
                     if((width/2)*(width/2) >= radius){//원 안을 눌렀을 때
                         changeIconColor(motionEvent)
                         ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
@@ -139,23 +138,31 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
                         if(motionEvent.getY() <= LinearDraw.height/2.toFloat()) {
                             if((width / 12) * (width / 12) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                                emoticon = 0
+                                ddIvicon.setImageResource(R.drawable.basic_level)
                             } else if ((width / 6) * (width / 6) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.happy_level3)
+                                emoticon = 1
+                                ddIvicon.setImageResource(R.drawable.happy_level1)
                             } else if ((width / 3) * (width / 3) >= radius) {
+                                emoticon = 2
                                 ddIvicon.setImageResource(R.drawable.happy_level2)
                             } else if ((width / 2) * (width / 2) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.happy_level1)
+                                emoticon = 3
+                                ddIvicon.setImageResource(R.drawable.happy_level3)
                             }
                         }else{
                             if((width / 12) * (width / 12) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                                emoticon = 0
+                                ddIvicon.setImageResource(R.drawable.basic_level)
                             } else if ((width / 6) * (width / 6) >= radius) {
-                                Log.d("position", "ㅠㅠ3")
+                                emoticon = 4
+                                ddIvicon.setImageResource(R.drawable.sad_level1)
                             } else if ((width / 3) * (width / 3) >= radius) {
-                                Log.d("position", "ㅠㅠ2")
+                                emoticon = 5
+                                ddIvicon.setImageResource(R.drawable.sad_level2)
                             } else if ((width / 2) * (width / 2) >= radius) {
-                               Log.d("position", "ㅠㅠ1")
+                                emoticon = 6
+                                ddIvicon.setImageResource(R.drawable.sad_level3)
                             }
                         }
 
@@ -172,11 +179,16 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
                         if(mx >= cx) {
                             realX = sqrt(middleX) + cx
                             realY = (my - cy) / (mx - cx) * (realX - cx) + cy
-                            ddIvicon.setImageResource(R.drawable.dialogicon)
                         }else {
                             realX = -sqrt(middleX) + cx
                             realY = (my - cy) / (mx - cx) * (realX - cx) + cy
-                            ddIvicon.setImageResource(R.drawable.dialogicon)
+                        }
+                        if(motionEvent.getY() <= LinearDraw.height/2.toFloat()) {
+                            emoticon=3
+                            ddIvicon.setImageResource(R.drawable.happy_level3)
+                        }else{
+                            emoticon=6
+                            ddIvicon.setImageResource(R.drawable.sad_level3)
                         }
                         changeIconColor(motionEvent)
                         ddIvicon.x = realX-ddIvicon.width/2
@@ -184,7 +196,6 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
                     }
                 }
                 MotionEvent.ACTION_UP -> { //누른걸 땠을 때
-                    ddIvicon.setImageResource(R.drawable.dialogicon)
                     ddIvicon.x = LinearDraw.width/2.toFloat() - ddIvicon.width/2
                     ddIvicon.y = LinearDraw.height/2.toFloat() - ddIvicon.height/2
                 }
@@ -195,18 +206,30 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
     private fun changeIconColor(motionEvent:MotionEvent){
         bitmap = ddIvbackground.drawingCache
+        var r:Int
+        var g:Int
+        var b:Int
         if(motionEvent.x.toInt()<bitmap.width&&motionEvent.y.toInt()<bitmap.height&&motionEvent.y.toInt()>=0&&motionEvent.x.toInt()>=0){
             val pixel = bitmap.getPixel(motionEvent.x.toInt(),motionEvent.y.toInt())
-            var r= Color.red(pixel)
-            var g= Color.green(pixel)
-            var b= Color.blue(pixel)
+            r= Color.red(pixel)
+            g= Color.green(pixel)
+            b= Color.blue(pixel)
             val hex = "#"+Integer.toHexString(pixel)
             ddIvicon.setColorFilter(Color.rgb(r,g,b))
+            Log.d("color","r:$r, g:$g, b:$b")
+            if(r==255 && g==0 && b==0){
+                diaryColor=1
+            }else if(r==255&&g==192&&b==0){
+                diaryColor=2
+            }else if(r==0&&g==176&&b==80){
+                diaryColor=3
+            }else if(r==0&&g==112&&b==192){
+                diaryColor=4
+            }else{
+                diaryColor=0
+            }
         }
     }
-
-
-
 
     private fun onWriteDBPost() {
         db = Firebase.database.reference
@@ -214,7 +237,6 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
         level = ddEdHl.text.toString()
         diary = ddEdDiary.text.toString()
-
 
         val postValues: HashMap<String, Any> = HashMap()
         val postListener = object : ValueEventListener {
@@ -231,6 +253,9 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
                         .child((cnt.toString().toInt() + 1).toString())
                 postValues["level"] = level
                 postValues["diary"] = diary
+                postValues["emoticon"] = emoticon
+                postValues["color"] = diaryColor
+
                 myRefDiary.setValue(postValues)
 
                 val myRefCount = db.child(user!!.uid).child("count").child(date).child("count")
@@ -245,6 +270,7 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         db.child(user!!.uid).addListenerForSingleValueEvent(postListener)
     }
 }
+
 @RequiresApi(Build.VERSION_CODES.O)
 class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: String) : Dialog(context) {
     private var mAuth: FirebaseAuth? = null
@@ -321,7 +347,7 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
 
                         if(motionEvent.getY() < LinearDraw.height/2.toFloat()) {
                             if((width / 12) * (width / 12) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                                ddIvicon.setImageResource(R.drawable.basic_level)
                             } else if ((width / 6) * (width / 6) >= radius) {
                                 ddIvicon.setImageResource(R.drawable.happy_level3)
                             } else if ((width / 3) * (width / 3) >= radius) {
@@ -331,7 +357,7 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
                             }
                         }else{
                             if((width / 12) * (width / 12) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.dialogicon)
+                                ddIvicon.setImageResource(R.drawable.basic_level)
                             } else if ((width / 6) * (width / 6) >= radius) {
                                 //ddIvicon.setImageResource(R.drawable.happy_level3)
                                 Log.d("position", "ㅠㅠ3")
@@ -348,7 +374,6 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
                     }
                 }
                 MotionEvent.ACTION_UP -> { //누른걸 땠을 때
-                    ddIvicon.setImageResource(R.drawable.dialogicon)
                     ddIvicon.x = LinearDraw.width/2.toFloat() - ddIvicon.width/2
                     ddIvicon.y = LinearDraw.height/2.toFloat() - ddIvicon.height/2
                 }

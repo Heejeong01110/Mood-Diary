@@ -341,11 +341,11 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
                     ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
                 }
                 MotionEvent.ACTION_MOVE -> { //누르고 움직였을 때
-                    if((width/2)*(width/2) >= radius){
+                    if((width/2)*(width/2) >= radius){//원 안을 눌렀을 때
                         ddIvicon.x = motionEvent.getX() - ddIvicon.width/2
                         ddIvicon.y = motionEvent.getY() - ddIvicon.height/2
 
-                        if(motionEvent.getY() < LinearDraw.height/2.toFloat()) {
+                        if(motionEvent.getY() <= LinearDraw.height/2.toFloat()) {
                             if((width / 12) * (width / 12) >= radius) {
                                 ddIvicon.setImageResource(R.drawable.basic_level)
                             } else if ((width / 6) * (width / 6) >= radius) {
@@ -355,20 +355,51 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
                             } else if ((width / 2) * (width / 2) >= radius) {
                                 ddIvicon.setImageResource(R.drawable.happy_level1)
                             }
-                        }else{
-                            if((width / 12) * (width / 12) >= radius) {
-                                ddIvicon.setImageResource(R.drawable.basic_level)
-                            } else if ((width / 6) * (width / 6) >= radius) {
-                                //ddIvicon.setImageResource(R.drawable.happy_level3)
-                                Log.d("position", "ㅠㅠ3")
-                            } else if ((width / 3) * (width / 3) >= radius) {
-                                //ddIvicon.setImageResource(R.drawable.happy_level2)
-                                Log.d("position", "ㅠㅠ2")
+                            Log.d("position","플러스 ${ddIvicon.x}, ${ddIvicon.y}")
+                        }else{if((width / 12) * (width / 12) >= radius) {
+                            ddIvicon.setImageResource(R.drawable.dialogicon)
+                        } else if ((width / 6) * (width / 6) >= radius) {
+                            Log.d("position", "ㅠㅠ3")
+                        } else if ((width / 3) * (width / 3) >= radius) {
+                            Log.d("position", "ㅠㅠ2")
 
-                            } else if ((width / 2) * (width / 2) >= radius) {
-                                //ddIvicon.setImageResource(R.drawable.happy_level1)
-                                Log.d("position", "ㅠㅠ1")
+                        } else if ((width / 2) * (width / 2) >= radius) {
+                            Log.d("position", "ㅠㅠ1")
 
+                        }
+                            Log.d("position","마이너스 ${ddIvicon.x}, ${ddIvicon.y}")
+                        }
+                    }else{//원 밖에 있을 때
+                        val cx = LinearDraw.width/2.toFloat()
+                        val cy = LinearDraw.height/2.toFloat()
+                        var mx = motionEvent.getX()
+                        var my = motionEvent.getY()
+                        var middleX =
+                            (width / 2) * (height / 2) * (1 / (1 + (my - cy) / (mx - cx) * (my - cy) / (mx - cx)))
+                        if(motionEvent.getX() >= width/2) {
+                            var realX = sqrt(middleX) + cx
+                            var realY = (my - cy) / (mx - cx) * (realX - cx) + cy
+                            ddIvicon.setImageResource(R.drawable.dialogicon)
+
+                            if(motionEvent.getY()>=height/2){ //둘다양수
+                                ddIvicon.x = realX-ddIvicon.width/2
+                                ddIvicon.y = realY-ddIvicon.height/2
+                            }else{//x양y음
+                                ddIvicon.x = realX-ddIvicon.width/2
+                                ddIvicon.y = realY-ddIvicon.height/2
+                            }
+
+                        }else {
+                            var realX = -sqrt(middleX) + cx
+                            var realY = (my - cy) / (mx - cx) * (realX - cx) + cy
+                            ddIvicon.setImageResource(R.drawable.dialogicon)
+
+                            if(motionEvent.getY()>=height/2){//x음y양
+                                ddIvicon.x = realX-ddIvicon.width/2
+                                ddIvicon.y = realY-ddIvicon.height/2
+                            }else{//둘다음수
+                                ddIvicon.x = realX-ddIvicon.width/2
+                                ddIvicon.y = realY-ddIvicon.height/2
                             }
                         }
                     }

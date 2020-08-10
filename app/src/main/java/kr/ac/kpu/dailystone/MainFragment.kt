@@ -57,17 +57,13 @@ class MainFragment : Fragment() {
 
         //ProgressView()
         readCount()
-
+        goalCount()
         mainTvDate.text = date
 
         mainBtnHappy.setOnClickListener {
-
             //var dialog = DialogAddFragment(it.context,date)
             var dialog = DialogDiaryFragment(it.context,date)
             dialog.show()
-
-
-
         }
         mainBtnSad.setOnClickListener {
             var dialog = DialogSadAddFragment(it.context)
@@ -137,6 +133,107 @@ class MainFragment : Fragment() {
         db.child(user!!.uid).child("diary").child(year).child(monthformatted)
             .child(dayformatted).addListenerForSingleValueEvent(dayListener)
 
+    }
+
+    private fun goalCount(){
+        var user = FirebaseAuth.getInstance().currentUser
+        var gcnt:Any = 0
+
+        val dayListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.value==null){
+                    gcnt=0
+                    mainPbDay.progress = 0
+                }
+                else{
+                    gcnt = snapshot.value!!
+                    monthGoal(gcnt.toString().toInt())
+                    dailyGoal()
+                }
+            }
+            override fun onCancelled(error: DatabaseError) { }
+        }
+        db.child(user!!.uid).child("count").child(date).child("count")
+            .addValueEventListener(dayListener)
+    }
+
+    private fun monthGoal(gcnt:Int) {
+        var user = FirebaseAuth.getInstance().currentUser
+        var Mgoal: Any = 0
+        var goalSum : Int
+        var goalList = mutableListOf<Int>()
+        val goalListener = object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var goalYear = mainTvDate.text.toString().substring(0,2)
+                var goalMonth = mainTvDate.text.toString().substring(2,4)
+                if (snapshot.child("count").child(date).value == null) {
+
+                } else {
+                    var cntDate : String= snapshot.child("count").child(date).value.toString()
+                    var cntMonth = cntDate.substring(2,4)
+                    var cntYear = cntDate.substring(0,2)
+                    if((cntYear == snapshot.child("goal").child(goalYear).value) && (cntMonth == snapshot.child("goal").child(goalYear).child(goalMonth).value)){
+                        for( i in 0 until gcnt){
+                            Mgoal = snapshot.child("goal").child(date).child("count").value!!
+                            goalList.add(i,Mgoal.toString().toInt())
+                        }
+                        goalSum = goalList.sum()
+                        mainPbMgoal.progress = goalSum
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        db.child(user!!.uid).addListenerForSingleValueEvent(goalListener)
+        /*override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child("goal").child(year).child(monthformatted).child("goal").value == null) {
+                    goal = 0
+                    mainPbMgoal.max = 0
+                } else {
+                    goal = snapshot.child("goal").child(year).child(monthformatted).child("goal").value!!
+                    //일별 평균 level 출력
+                    mainPbMgoal.max = goal as Int
+                }
+            }*/
+
+    }
+    private fun dailyGoal() {
+        var user = FirebaseAuth.getInstance().currentUser
+        var Dgoal: Any = 0
+        val goalListener = object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var goalYear = mainTvDate.text.toString().substring(0, 2)
+                var goalMonth = mainTvDate.text.toString().substring(2, 4)
+                var goalDay = mainTvDate.text.toString().substring(4,6)
+                if (snapshot.child("count").child(date).value == null) {
+                } else {
+                    var cntDate: String = snapshot.child("count").child(date).value.toString()
+                    var cntYear = cntDate.substring(0, 2)
+                    var cntMonth = cntDate.substring(2, 4)
+                    var cntDay = cntDate.substring(4,6)
+                    if ((goalYear == snapshot.child("goal")
+                            .child(cntYear).value) && (goalMonth == snapshot.child("goal")
+                            .child(cntYear).child(goalMonth).value) && (goalDay == snapshot.child("goal").child(cntYear).child(cntMonth).child(cntDay).value)
+                    ) {
+                        Dgoal = snapshot.child("count").child(date).child("count").value.toString()
+                        mainPbMgoal.progress = Dgoal.toString().toInt()
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        db.child(user!!.uid).addListenerForSingleValueEvent(goalListener)
     }
 
    private fun preDate(){//이전 날짜 조회

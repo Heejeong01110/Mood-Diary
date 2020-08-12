@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -211,6 +212,7 @@ class MainFragment : Fragment() {
                         snapshot.child("goal").child(goalYear).child(goalMonth)
                             .child("goal").value!!.toString().toInt()
                 }
+
                 mainPbMgoal.max = Maxgoal.toString().toInt()
                 mainPbMgoal2.max = Maxgoal.toString().toInt()
                 if (gSum <= Maxgoal) {
@@ -261,34 +263,36 @@ class MainFragment : Fragment() {
     private fun dailyGoal() {
         var user = FirebaseAuth.getInstance().currentUser
         var MaxDay: Int = 1
-        var Dgoal : Int = 0
-        val goalListener = object : ValueEventListener {
+        var Dgoal: Int = 0
+        val DgoalListener = object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 mainPbDgoal.max = MaxDay
-                if (snapshot.child(date).child("count").value == null) {
-                    /*mainPbDgoal.progress = 0
-                    mainPbDgoal2.progress = 0*/
+                if (snapshot.child("count").child(date).child("count").value == null) {
+
                 } else {
-                    Dgoal = snapshot.child(date).child("count").value.toString().toInt()
+                    Dgoal =
+                        snapshot.child("count").child(date).child("count").value.toString().toInt()
+
                 }
                 mainPbDgoal.progress = Dgoal
 
-                if (mainPbDgoal.progress <= 1) {
+                if (Dgoal <= 1) {
                     mainPbDgoal.progress = Dgoal
                     mainPbDgoal2.progress = 0
+
                 } else {
-                    mainPbDgoal.progress = mainPbDgoal.max
-                    mainPbDgoal2.progress = Dgoal - mainPbDgoal.max
-                    }
+                    mainPbDgoal.progress = MaxDay
+                    mainPbDgoal2.progress = Dgoal - MaxDay
+                }
 
             }
 
         }
-        db.child(user!!.uid).addListenerForSingleValueEvent(goalListener)
+        db.child(user!!.uid).addValueEventListener(DgoalListener)
     }
 
 
@@ -304,6 +308,7 @@ class MainFragment : Fragment() {
         mainTvDate.text = date
         readCount()
         goalCount()
+        dailyGoal()
     }
 
     private fun nextDate() {//다음 날짜 조회
@@ -317,5 +322,6 @@ class MainFragment : Fragment() {
         mainTvDate.text = date
         readCount()
         goalCount()
+        dailyGoal()
     }
 }

@@ -22,6 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="2차 비밀번호 설정"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
 
         />
 
@@ -29,13 +32,20 @@
         android:id="@+id/btnDisable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2차 비밀번호 설정 삭제" />
+        android:text="2차 비밀번호 설정 삭제"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
+        />
 
     <Button
         android:id="@+id/btnPassChange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2차 비밀번호 변경" />
+        android:text="2차 비밀번호 변경"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"/>
     <!-- <Button
         android:id="@+id/btnUnlock"
         android:layout_width="match_parent"

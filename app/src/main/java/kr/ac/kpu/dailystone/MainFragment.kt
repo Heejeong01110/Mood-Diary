@@ -1,19 +1,29 @@
 package kr.ac.kpu.dailystone
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.dialog_diary.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.fragment_month.view.*
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.DateTimeFormatter
@@ -54,25 +64,18 @@ class MainFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
-
-        //ProgressView()
         readCount()
 
         mainTvDate.text = date
 
         mainBtnHappy.setOnClickListener {
-
-            //var dialog = DialogAddFragment(it.context,date)
             var dialog = DialogDiaryFragment(it.context,date)
             dialog.show()
-
-
-
         }
-        mainBtnSad.setOnClickListener {
-            var dialog = DialogSadAddFragment(it.context)
-            dialog.show()
-        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         mainBtnPre.setOnClickListener {
             preDate()
         }
@@ -86,12 +89,67 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main,container,false)
+        val rootView = inflater.inflate(R.layout.fragment_main, container, false)
+        readDayDiary(rootView)
+
+        return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    private fun readDayDiary(rootView:View){
+        db = Firebase.database.reference
+        var user = FirebaseAuth.getInstance().currentUser
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                rootView.mainGrid.removeAllViews()
+                val childCount = snapshot.childrenCount.toInt()
+                Log.d("test","childCount : $childCount")
+                for (i in 1 until childCount + 1) {
+                    if (snapshot.child("$i").hasChildren()) {
+                        val gv: GridLayout = rootView.findViewById(R.id.mainGrid)
+                        var width = Resources.getSystem().displayMetrics.widthPixels
+                        var devicewidth = (width - 128) / 5
+                        val iv = ImageView(context)
+
+                        matchImageViewColor(iv, snapshot.child("$i").child("color").value.toString())
+                        matchImageViewResource(iv, snapshot.child("$i").child("emoticon").value.toString())
+
+                        val params = LinearLayout.LayoutParams(devicewidth, devicewidth)
+                        iv.layoutParams = params
+                        gv.addView(iv)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        db.child(user!!.uid).child("diary").child(year).child(monthformatted).child(dayformatted)
+            .addValueEventListener(postListener)
     }
+    private fun matchImageViewColor(view : ImageView, i : String){
+        when(i){
+            "1" -> {view.setColorFilter(Color.rgb(255,0,0))}
+            "2" -> {view.setColorFilter(Color.rgb(255,192,0))}
+            "3" -> {view.setColorFilter(Color.rgb(0, 176,80))}
+            "4" -> {view.setColorFilter(Color.rgb(0,112,192))}
+            "0" -> {view.setColorFilter(Color.rgb(0,112,192))}
+        }
+    }
+
+    private fun matchImageViewResource(view : ImageView, i : String){
+        when(i){
+            "0" -> {view.setImageResource(R.drawable.basic_level) }
+            "1" -> {view.setImageResource(R.drawable.happy_level1) }
+            "2" -> {view.setImageResource(R.drawable.happy_level2) }
+            "3" -> {view.setImageResource(R.drawable.happy_level3)}
+            "4" -> {view.setImageResource(R.drawable.sad_level1) }
+            "5" -> {view.setImageResource(R.drawable.sad_level2)}
+            "6" -> {view.setImageResource(R.drawable.sad_level3)}
+        }
+    }
+
+
+
 
     private fun readCount(){
         var user = FirebaseAuth.getInstance().currentUser
@@ -149,6 +207,8 @@ class MainFragment : Fragment() {
        monthformatted = formatted2.substring(4,6)
        dayformatted = formatted2.substring(6,8)
        mainTvDate.text = date
+       var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
+       ft?.detach(this)?.attach(this)?.commit()
        readCount()
    }
 
@@ -161,6 +221,8 @@ class MainFragment : Fragment() {
         monthformatted = formatted2.substring(4,6)
         dayformatted = formatted2.substring(6,8)
         mainTvDate.text = date
+        var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
+        ft?.detach(this)?.attach(this)?.commit()
         readCount()
     }
 }

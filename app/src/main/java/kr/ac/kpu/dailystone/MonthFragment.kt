@@ -121,6 +121,7 @@ class MonthFragment : Fragment() {
                                 sum += snapshot.child("$i").child("$j")
                                     .child("level").value.toString().toInt()
                                 var meanSum: Int = (sum / monthCount)
+                                Log.d("HAN", "$meanSum")
                                 if (meanSum in 1..20) {
                                     iv.setImageResource(R.drawable.level_sad)
                                 } else if (meanSum in 21..50) {

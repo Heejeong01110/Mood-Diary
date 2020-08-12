@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -17,6 +19,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_main.*
 import kr.ac.kpu.dailystone.MonthDetailFragment.Companion.TAG
+import org.w3c.dom.Text
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -192,7 +195,9 @@ class MainFragment : Fragment() {
     private fun monthGoal(gSum: Int) {
         var user = FirebaseAuth.getInstance().currentUser
         var Maxgoal: Int = 0
-
+        val mainTvDate : TextView = requireView().findViewById(R.id.mainTvDate)
+        val mainPbMgoal : ProgressBar = requireView().findViewById(R.id.mainPbMgoal)
+        val mainPbMgoal2 : ProgressBar = requireView().findViewById(R.id.mainPbMgoal2)
         val goalListener = object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -264,21 +269,24 @@ class MainFragment : Fragment() {
         var user = FirebaseAuth.getInstance().currentUser
         var MaxDay: Int = 1
         var Dgoal: Int = 0
+        val mainPbDgoal : ProgressBar = requireView().findViewById(R.id.mainPbDgoal)
+        val mainPbDgoal2 : ProgressBar = requireView().findViewById(R.id.mainPbDgoal2)
+        mainPbDgoal.max = MaxDay
         val DgoalListener = object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                mainPbDgoal.max = MaxDay
+
                 if (snapshot.child("count").child(date).child("count").value == null) {
 
                 } else {
                     Dgoal =
                         snapshot.child("count").child(date).child("count").value.toString().toInt()
+                    mainPbDgoal.progress = Dgoal
 
                 }
-                mainPbDgoal.progress = Dgoal
 
                 if (Dgoal <= 1) {
                     mainPbDgoal.progress = Dgoal

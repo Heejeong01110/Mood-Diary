@@ -62,7 +62,7 @@ class MainFragment : Fragment() {
         db = Firebase.database.reference
         readCount()
         goalCount()
-        dailyGoal()
+        dailyGoal(date)
         mainTvDate.text = date
 
         mainBtnHappy.setOnClickListener {
@@ -290,7 +290,7 @@ class MainFragment : Fragment() {
         db.child(user!!.uid).addValueEventListener(goalListener)
     }
 
-    private fun dailyGoal() {
+    private fun dailyGoal(date:String) {
         var user = FirebaseAuth.getInstance().currentUser
         var MaxDay: Int = 1
         var Dgoal: Int = 0
@@ -341,7 +341,7 @@ class MainFragment : Fragment() {
         ft?.detach(this)?.attach(this)?.commit()
         readCount()
         goalCount()
-        dailyGoal()
+        dailyGoal(date)
     }
 
     private fun nextDate() {//다음 날짜 조회
@@ -357,6 +357,6 @@ class MainFragment : Fragment() {
         ft?.detach(this)?.attach(this)?.commit()
         readCount()
         goalCount()
-        dailyGoal()
+        dailyGoal(date)
     }
 }

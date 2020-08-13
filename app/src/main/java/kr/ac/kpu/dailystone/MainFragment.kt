@@ -352,7 +352,7 @@ class MainFragment : Fragment() {
         year = formatted2.substring(2, 4)
         monthformatted = formatted2.substring(4, 6)
         dayformatted = formatted2.substring(6, 8)
-        mainTvDate.text = date
+        mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
         var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
         ft?.detach(this)?.attach(this)?.commit()
         readCount()

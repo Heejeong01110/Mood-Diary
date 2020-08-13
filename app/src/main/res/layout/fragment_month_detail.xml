@@ -22,9 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="누적돌멩쓰"
-            android:includeFontPadding="false"
-            android:textSize="20sp"
-            android:fontFamily="@font/fontstyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tvOutputMonth" />
 
@@ -33,9 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="n월"
-            android:includeFontPadding="false"
-            android:textSize="25sp"
-            android:fontFamily="@font/fontstyle"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/monthTv"
             app:layout_constraintStart_toStartOf="parent" />

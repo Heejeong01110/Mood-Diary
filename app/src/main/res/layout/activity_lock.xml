@@ -10,10 +10,7 @@
         android:id="@+id/etInputInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="비밀번호 입력"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"/>
+        android:text="비밀번호 입력" />
 
     <LinearLayout
         android:id="@+id/ll_passcodes"
@@ -31,8 +28,6 @@
             android:inputType="textPassword|number"
             android:maxLines="1"
             android:textSize="40sp"
-            android:includeFontPadding="false"
-            android:fontFamily="@font/fontstyle"
             tools:ignore="Suspicious0dp">
 
             <requestFocus />
@@ -47,8 +42,6 @@
             android:gravity="center"
             android:inputType="textPassword|number"
             android:maxLines="1"
-            android:includeFontPadding="false"
-            android:fontFamily="@font/fontstyle"
             android:textSize="40sp"
             tools:ignore="Suspicious0dp">
 
@@ -61,8 +54,6 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:includeFontPadding="false"
-            android:fontFamily="@font/fontstyle"
             android:inputType="textPassword|number"
             android:maxLines="1"
             android:textSize="40sp"
@@ -79,8 +70,6 @@
             android:gravity="center"
             android:inputType="textPassword|number"
             android:maxLines="1"
-            android:includeFontPadding="false"
-            android:fontFamily="@font/fontstyle"
             android:textSize="40sp"
             tools:ignore="Suspicious0dp">
 
@@ -112,9 +101,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="1"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn02"
@@ -123,9 +110,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="2"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle"/>
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn03"
@@ -134,9 +119,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="3"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
             </TableRow>
 
@@ -149,9 +132,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="4"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn05"
@@ -160,9 +141,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="5"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn06"
@@ -171,9 +150,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="6"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
             </TableRow>
 
             <TableRow>
@@ -185,9 +162,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="7"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn08"
@@ -196,9 +171,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="8"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn09"
@@ -207,9 +180,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="9"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
             </TableRow>
 
             <TableRow>
@@ -221,9 +192,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="Clear"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btn00"
@@ -232,16 +201,11 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="0"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle" />
+                    android:textSize="18dp" />
 
                 <Button
                     android:id="@+id/btnErase"
-                    android:text="Del"
-                    android:includeFontPadding="false"
-                    android:textSize="25sp"
-                    android:fontFamily="@font/fontstyle"/>
+                    android:text="Del" />
             </TableRow>
 
         </TableLayout>

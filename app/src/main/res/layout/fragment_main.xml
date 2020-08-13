@@ -11,10 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="69dp"
-        android:includeFontPadding="false"
-        android:fontFamily="@font/fontstyle"
         android:text="7/23"
-        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,33 +19,26 @@
 
     <Button
         android:id="@+id/mainBtnPre"
-        android:background="@drawable/button_style"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
         android:layout_marginEnd="21dp"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
         android:text="이전"
+        android:textStyle="bold"
+        android:background="@drawable/button_background"
         app:layout_constraintEnd_toStartOf="@+id/mainTvDate"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
         android:id="@+id/mainBtnNext"
-        android:background="@drawable/button_style"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
         android:layout_marginTop="55dp"
         android:text="다음"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
+        android:textStyle="bold"
+        android:background="@drawable/button_background"
         app:layout_constraintStart_toEndOf="@+id/mainTvDate"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,21 +117,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainPbDgoal" />
 
-    <Button
-        android:id="@+id/mainBtnHappy"
+    <TextView
+        android:id="@+id/mainTvHappy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="273dp"
-        android:text="일기 쓰기"
-        android:background="@drawable/button_style"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
+        android:text="행복"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/mainBtnHappy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="돌멩쓰 추가하기"
+        android:ems="8"
+        android:background="@drawable/button_background"
+        app:layout_constraintStart_toEndOf="@id/mainTvHappy"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mainTvHappy"
+        app:layout_constraintTop_toTopOf="@+id/mainTvHappy" />
 
     <GridLayout
         android:id="@+id/mainGrid"

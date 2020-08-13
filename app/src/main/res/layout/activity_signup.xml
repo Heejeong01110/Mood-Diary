@@ -18,9 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="아이디 : "
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
         app:layout_constraintBaseline_toBaselineOf="@id/etIdInput"
         app:layout_constraintRight_toLeftOf="@id/etIdInput" />
 
@@ -29,10 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:fontFamily="@font/fontstyle"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.745"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline1" />
@@ -41,9 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="패스워드 : "
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
         app:layout_constraintBaseline_toBaselineOf="@id/etPassInput"
         app:layout_constraintRight_toLeftOf="@id/etPassInput" />
 
@@ -52,11 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:fontFamily="@font/fontstyle"
-        android:includeFontPadding="false"
         android:password="true"
-        android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.745"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etIdInput" />
@@ -65,9 +51,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="패스워드 확인 : "
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
         app:layout_constraintBaseline_toBaselineOf="@id/etPassReInput"
         app:layout_constraintRight_toLeftOf="@id/etPassReInput" />
 
@@ -76,11 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:fontFamily="@font/fontstyle"
-        android:includeFontPadding="false"
         android:password="true"
-        android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.745"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassInput" />
@@ -92,9 +71,6 @@
         android:background="#00FF0000"
         android:text="확인"
         android:textColor="#00BFFF"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -104,9 +80,6 @@
         android:layout_height="wrap_content"
         android:background="#00FF0000"
         android:text="취소"
-        android:includeFontPadding="false"
-        android:textSize="20sp"
-        android:fontFamily="@font/fontstyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btnConfirm" />
 

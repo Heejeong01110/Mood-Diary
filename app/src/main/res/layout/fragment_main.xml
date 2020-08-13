@@ -14,7 +14,10 @@
         android:includeFontPadding="false"
         android:fontFamily="@font/fontstyle"
         android:text="7/23"
+<<<<<<< HEAD
         android:textSize="30sp"
+=======
+>>>>>>> parent of ca7ad1c... asf
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

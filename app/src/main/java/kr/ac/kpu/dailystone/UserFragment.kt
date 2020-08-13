@@ -54,9 +54,6 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
-        userBtnReset.setOnClickListener {
-
-        }
 
         userBtnLogout.setOnClickListener {      //클릭 시 로그아웃
             signOut()

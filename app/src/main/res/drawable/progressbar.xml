@@ -4,11 +4,12 @@
     <item android:id="@+id/progress_background">
         <shape>
             <corners android:radius="5dip" />
+            <!--배경-->
             <gradient
-                android:startColor="#ff9d9e9d"
-                android:centerColor="#ff5a5d5a"
+                android:startColor="@color/progressBack"
+                android:centerColor="@color/progressBack"
                 android:centerY="0.75"
-                android:endColor="#ff747674"
+                android:endColor="@color/progressBack"
                 android:angle="270"
                 />
         </shape>
@@ -18,11 +19,12 @@
         <clip>
             <shape>
                 <corners android:radius="5dip" />
+                <!--2번째-->
                 <gradient
-                    android:startColor="#80ff171d"
-                    android:centerColor="#80ff1315"
+                    android:startColor="@color/progressTwo"
+                    android:centerColor="@color/progressTwo"
                     android:centerY="0.75"
-                    android:endColor="#a0ff0208"
+                    android:endColor="@color/progressTwo"
                     android:angle="270"
                     />
             </shape>
@@ -33,11 +35,12 @@
         <clip>
             <shape>
                 <corners android:radius="5dip" />
+                <!--1번째-->
                 <gradient
-                    android:startColor="#7d2afdff"
-                    android:centerColor="#ff2afdff"
+                    android:startColor="@color/progressOne"
+                    android:centerColor="@color/progressOne"
                     android:centerY="0.75"
-                    android:endColor="#ff22b9ba"
+                    android:endColor="@color/progressOne"
                     android:angle="270"
                     />
             </shape>

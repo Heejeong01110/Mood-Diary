@@ -10,10 +10,10 @@
         android:id="@+id/mainTvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="69dp"
-        android:text="7/23"
+        android:layout_marginTop="120dp"
+        android:text="07월 23일"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,26 +21,25 @@
         android:id="@+id/mainBtnPre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_background"
         android:text="이전"
         android:textStyle="bold"
-        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="@+id/mainTvDate"
         app:layout_constraintEnd_toStartOf="@+id/mainTvDate"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="@+id/mainTvDate" />
 
     <Button
         android:id="@+id/mainBtnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
-        android:layout_marginTop="55dp"
+        android:background="@drawable/button_background"
         android:text="다음"
         android:textStyle="bold"
-        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="@+id/mainTvDate"
         app:layout_constraintStart_toEndOf="@+id/mainTvDate"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/mainTvDate" />
 
     <ProgressBar
         android:id="@+id/mainPbMgoal"
@@ -117,34 +116,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainPbDgoal" />
 
-    <TextView
-        android:id="@+id/mainTvHappy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="273dp"
-        android:text="행복"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/mainBtnHappy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="돌멩쓰 추가하기"
-        android:ems="8"
+        android:layout_marginTop="52dp"
         android:background="@drawable/button_background"
-        app:layout_constraintStart_toEndOf="@id/mainTvHappy"
-        app:layout_constraintBaseline_toBaselineOf="@+id/mainTvHappy"
-        app:layout_constraintTop_toTopOf="@+id/mainTvHappy" />
+        android:ems="8"
+        android:text="돌멩쓰 추가하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainPbDay" />
 
     <GridLayout
         android:id="@+id/mainGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:columnCount="5"
         android:padding="64px"
-        app:layout_constraintTop_toBottomOf="@id/mainBtnHappy"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainBtnHappy" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="145dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/textline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

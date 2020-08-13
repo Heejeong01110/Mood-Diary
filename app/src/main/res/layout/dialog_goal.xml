@@ -16,6 +16,9 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:text="Cancel"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etGoal" />
 
@@ -26,6 +29,9 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="일별 목표 게시글 수"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="일별 목표 게시물 개수를 입력하세요"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,9 +55,13 @@
         android:id="@+id/btnGoalApply"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:text="Apply"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etGoal" />
 

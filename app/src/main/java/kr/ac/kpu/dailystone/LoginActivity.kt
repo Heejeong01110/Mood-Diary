@@ -1,6 +1,8 @@
 package kr.ac.kpu.dailystone
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -22,8 +24,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.dialog_progress.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 class LoginActivity : AppCompatActivity() {
@@ -49,7 +53,8 @@ class LoginActivity : AppCompatActivity() {
     private var formatted: String = current.format(formatter)
     var year = formatted.substring(2,4)
     var month = formatted.substring(4,6)
-
+    val dlgView = layoutInflater.inflate(R.layout.dialog_progress , null)
+    val progressDialog = AlertDialog.Builder(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,7 +144,6 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 database.child(uid!!).child("goal").child(year).child(month).addListenerForSingleValueEvent(postListener)
-
                 //다음 화면으로 넘어가는 코드
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)

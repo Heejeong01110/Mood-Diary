@@ -152,4 +152,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/textline" />
 
+    <TextView
+        android:id="@+id/mainTvmgoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이 달의 목표치 : "
+        app:layout_constraintBottom_toTopOf="@+id/mainPbDgoal"
+        app:layout_constraintStart_toStartOf="@+id/mainPbMgoal"
+        app:layout_constraintTop_toBottomOf="@+id/mainPbMgoal" />
+
+    <TextView
+        android:id="@+id/mainTvdgoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오늘의 목표치 : "
+        app:layout_constraintBottom_toTopOf="@+id/mainPbDay"
+        app:layout_constraintStart_toStartOf="@+id/mainPbDgoal"
+        app:layout_constraintTop_toBottomOf="@+id/mainPbDgoal" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

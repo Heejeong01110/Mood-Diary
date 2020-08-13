@@ -62,7 +62,7 @@ class MainFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance();
         db = Firebase.database.reference
         readCount()
-        goalCount()
+        goalCount(date)
         dailyGoal(date)
         mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
 
@@ -196,56 +196,54 @@ class MainFragment : Fragment() {
             .child(dayformatted).addListenerForSingleValueEvent(dayListener)
 
     }
-    private fun goalCount() {
+
+    private fun goalCount(date:String) {
         var user = FirebaseAuth.getInstance().currentUser
         var gSum: Int = 0
+        var gDate = date.substring(0,4)
         val goalListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (i in 1..31) {
                     if (i < 10) {
-                        if (snapshot.child(year + monthformatted + "0$i")
+                        if (snapshot.child(gDate + "0$i")
                                 .child("count").value == null
                         ) {
                         } else {
-                            gSum += snapshot.child(year + monthformatted + "0$i")
+                            gSum += snapshot.child(gDate+ "0$i")
                                 .child("count").value.toString().toInt()
                         }
                     } else {
-                        if (snapshot.child(year + monthformatted + "$i")
+                        if (snapshot.child(gDate + "$i")
                                 .child("count").value == null
                         ) {
-
                         } else {
-                            gSum += snapshot.child(year + monthformatted + "$i")
+                            gSum += snapshot.child(gDate+ "$i")
                                 .child("count").value.toString().toInt()
                         }
                     }
                 }
-                monthGoal(gSum)
+                monthGoal(gSum,date)
             }
-
             override fun onCancelled(error: DatabaseError) {}
         }
         db.child(user!!.uid).child("count")
             .addValueEventListener(goalListener)
     }
-
-    private fun monthGoal(gSum: Int) {
+    private fun monthGoal(gSum: Int, date : String) {
         var user = FirebaseAuth.getInstance().currentUser
         var Maxgoal: Int = 0
-        val mainTvDate : TextView = requireView().findViewById(R.id.mainTvDate)
+        //val mainTvDate : TextView = requireView().findViewById(R.id.mainTvDate)
         val mainPbMgoal : ProgressBar = requireView().findViewById(R.id.mainPbMgoal)
         val mainPbMgoal2 : ProgressBar = requireView().findViewById(R.id.mainPbMgoal2)
         val goalListener = object : ValueEventListener {
-
             override fun onDataChange(snapshot: DataSnapshot) {
-                var goalYear = mainTvDate.text.toString().substring(0, 2)
-                var goalMonth = mainTvDate.text.toString().substring(2, 4)
-
+                // var goalYear = mainTvDate.text.toString().substring(0, 2)
+                //var goalMonth = mainTvDate.text.toString().substring(2, 4)
+                var goalYear = date.substring(0,2)
+                var goalMonth = date.substring(2,4)
                 if (snapshot.child("goal").child(goalYear).child(goalMonth)
                         .child("goal").value == null
                 ) {
-
                     mainPbMgoal.visibility = View.INVISIBLE
                     mainPbMgoal2.visibility = View.INVISIBLE
                 } else {
@@ -255,43 +253,45 @@ class MainFragment : Fragment() {
                         snapshot.child("goal").child(goalYear).child(goalMonth)
                             .child("goal").value!!.toString().toInt()
                 }
-
                 mainPbMgoal.max = Maxgoal.toString().toInt()
                 mainPbMgoal2.max = Maxgoal.toString().toInt()
+                //tv 설정
+                mainTvmgoal.text = "이 달의 목표치 : ${gSum.toString()}/${Maxgoal.toString()}"
                 if (gSum <= Maxgoal) {
                     mainPbMgoal.progress = gSum
                     mainPbMgoal2.progress = 0
                     Log.d("pb", "1 gsum : $gSum, MaxGoal : $Maxgoal")
+                } else if ((gSum - Maxgoal) == Maxgoal) {
+                    mainPbMgoal.progress = Maxgoal
+                    mainPbMgoal2.progress = Maxgoal
+                    Log.d(
+                        "pb", "3 gs" +
+                                "um : $gSum, MaxGoal : $Maxgoal, pr1 : ${mainPbMgoal.progress} ,pr2 : ${mainPbMgoal2.progress}"
+                    )
                 } else {
                     /* val progress2: Drawable = mainPbMgoal.progressDrawable.mutate()
                      progress2.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
                      mainPbMgoal.progressDrawable = progress2*/
-                    mainPbMgoal.progress = Maxgoal
-                    mainPbMgoal2.progress = gSum - Maxgoal
-                    Log.d("pb", "2 gsum : $gSum, MaxGoal : $Maxgoal")
+                    Log.d("pb", "2 gsum : $gSum, MaxGoal : $Maxgoal ,pr1 : ${mainPbMgoal.progress} , pr2 : ${mainPbMgoal2.progress}")
                     if ((gSum - Maxgoal) > Maxgoal) {
-                        mainPbMgoal2.progress = Maxgoal
-                        Log.d(
-                            "pb", "3 gs" +
-                                    "um : $gSum, MaxGoal : $Maxgoal"
-                        )
+                    }
+                    else{
+                        mainPbMgoal.progress = Maxgoal
+                        mainPbMgoal2.progress = gSum - Maxgoal
+                        Log.d("pb", "4 gsum : $gSum, MaxGoal : $Maxgoal ,pr1 : ${mainPbMgoal.progress} , pr2 : ${mainPbMgoal2.progress}")
                     }
                 }
-
                 Log.d(
                     "Min: ", "snapshot : ${snapshot.child("goal")
                         .child(goalYear).value}"
                 )
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         }
         db.child(user!!.uid).addValueEventListener(goalListener)
     }
-
     private fun dailyGoal(date:String) {
         var user = FirebaseAuth.getInstance().currentUser
         var MaxDay: Int = 1
@@ -299,36 +299,34 @@ class MainFragment : Fragment() {
         val mainPbDgoal : ProgressBar = requireView().findViewById(R.id.mainPbDgoal)
         val mainPbDgoal2 : ProgressBar = requireView().findViewById(R.id.mainPbDgoal2)
         mainPbDgoal.max = MaxDay
+        Log.d("vs", "1 Dgoal : $Dgoal, pr1 : ${mainPbDgoal.progress}, pr2 : ${mainPbDgoal2.progress}")
         val DgoalListener = object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 if (snapshot.child("count").child(date).child("count").value == null) {
-
                 } else {
                     Dgoal =
                         snapshot.child("count").child(date).child("count").value.toString().toInt()
-                    mainPbDgoal.progress = Dgoal
-
+                    Log.d("vs", "2 Dgoal : $Dgoal, pr1 : ${mainPbDgoal.progress}, pr2 : ${mainPbDgoal2.progress}")
                 }
+                mainTvdgoal.text = "오늘의 목표치 : ${Dgoal.toString()}/${MaxDay.toString()}"
 
                 if (Dgoal <= 1) {
                     mainPbDgoal.progress = Dgoal
                     mainPbDgoal2.progress = 0
-
+                    Log.d("vs", "3 Dgoal : $Dgoal, pr1 : ${mainPbDgoal.progress}, pr2 : ${mainPbDgoal2.progress}")
                 } else {
                     mainPbDgoal.progress = MaxDay
                     mainPbDgoal2.progress = Dgoal - MaxDay
+                    Log.d("vs", "4 Dgoal : $Dgoal, pr1 : ${mainPbDgoal.progress}, pr2 : ${mainPbDgoal2.progress}")
                 }
-
             }
-
         }
         db.child(user!!.uid).addValueEventListener(DgoalListener)
     }
+
     private fun preDate() {//이전 날짜 조회
 
         var ld: LocalDate = LocalDate.of(year.toInt(), monthformatted.toInt(), dayformatted.toInt())
@@ -338,11 +336,11 @@ class MainFragment : Fragment() {
         year = formatted2.substring(2, 4)
         monthformatted = formatted2.substring(4, 6)
         dayformatted = formatted2.substring(6, 8)
-        mainTvDate.text = date
+        mainTvDate.text ="${monthformatted}월 ${dayformatted}일"
         var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
         ft?.detach(this)?.attach(this)?.commit()
         readCount()
-        goalCount()
+        goalCount(date)
         dailyGoal(date)
     }
 
@@ -354,11 +352,11 @@ class MainFragment : Fragment() {
         year = formatted2.substring(2, 4)
         monthformatted = formatted2.substring(4, 6)
         dayformatted = formatted2.substring(6, 8)
-        mainTvDate.text = date
+        mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
         var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
         ft?.detach(this)?.attach(this)?.commit()
         readCount()
-        goalCount()
+        goalCount(date)
         dailyGoal(date)
     }
 }

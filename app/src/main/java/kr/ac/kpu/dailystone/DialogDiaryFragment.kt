@@ -493,8 +493,6 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
                     postValues["color"] = diaryColor
                 }
                 myRefDiary.setValue(postValues)
-
-
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -62,8 +62,13 @@ class MainFragment : Fragment() {
         db = Firebase.database.reference
         readCount()
         goalCount()
+<<<<<<< HEAD
+        mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
         dailyGoal(date)
+=======
+        dailyGoal()
         mainTvDate.text = date
+>>>>>>> parent of 86053a3... mainPbDgoal 프로그래스바 수정
 
         mainBtnHappy.setOnClickListener {
             var dialog = DialogDiaryFragment(it.context,date)
@@ -290,7 +295,7 @@ class MainFragment : Fragment() {
         db.child(user!!.uid).addValueEventListener(goalListener)
     }
 
-    private fun dailyGoal(date:String) {
+    private fun dailyGoal() {
         var user = FirebaseAuth.getInstance().currentUser
         var MaxDay: Int = 1
         var Dgoal: Int = 0
@@ -336,12 +341,12 @@ class MainFragment : Fragment() {
         year = formatted2.substring(2, 4)
         monthformatted = formatted2.substring(4, 6)
         dayformatted = formatted2.substring(6, 8)
-        mainTvDate.text = date
+        mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
         var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
         ft?.detach(this)?.attach(this)?.commit()
         readCount()
         goalCount()
-        dailyGoal(date)
+        dailyGoal()
     }
 
     private fun nextDate() {//다음 날짜 조회
@@ -352,11 +357,11 @@ class MainFragment : Fragment() {
         year = formatted2.substring(2, 4)
         monthformatted = formatted2.substring(4, 6)
         dayformatted = formatted2.substring(6, 8)
-        mainTvDate.text = date
+        mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
         var ft : FragmentTransaction? = fragmentManager?.beginTransaction()
         ft?.detach(this)?.attach(this)?.commit()
         readCount()
         goalCount()
-        dailyGoal(date)
+        dailyGoal()
     }
 }

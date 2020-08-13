@@ -35,8 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:srcCompat="@drawable/basic_level" />
-
-
     </FrameLayout>
 
 
@@ -54,7 +52,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="63dp"
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/fontstyle"
             android:text="행복지수"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +63,9 @@
 
 
         <EditText
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/fontstyle"
             android:id="@+id/ddEdHl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,6 +100,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/fontstyle"
             android:hint="오늘 기분을 써보세요"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,6 +125,7 @@
 
         <Button
             android:id="@+id/ddBtnNo"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -128,8 +136,10 @@
             android:maxWidth="205dp"
             android:maxHeight="85dp"
             android:text="안쓸랭"
-            android:textColor="#000000"
-            android:textSize="16dp" />
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/fontstyle"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/ddBtnYes"
@@ -144,7 +154,9 @@
             android:maxHeight="85dp"
             android:text="쓸랭"
             android:textColor="#000000"
-            android:textSize="16dp" />
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/fontstyle" />
 
 
     </LinearLayout>

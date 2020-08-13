@@ -3,7 +3,7 @@
 
     <item android:id="@+id/progress_background">
         <shape>
-            <corners android:radius="5dip" />
+            <corners android:radius="15dip" />
             <!--배경-->
             <gradient
                 android:startColor="@color/progressBack"
@@ -18,7 +18,7 @@
     <item android:id="@+id/secondaryProgress">
         <clip>
             <shape>
-                <corners android:radius="5dip" />
+                <corners android:radius="15dip" />
                 <!--2번째-->
                 <gradient
                     android:startColor="@color/progressTwo"
@@ -34,7 +34,7 @@
     <item android:id="@+id/progress">
         <clip>
             <shape>
-                <corners android:radius="5dip" />
+                <corners android:radius="15dip" />
                 <!--1번째-->
                 <gradient
                     android:startColor="@color/progressOne"

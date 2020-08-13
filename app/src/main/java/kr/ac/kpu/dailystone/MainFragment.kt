@@ -2,6 +2,7 @@ package kr.ac.kpu.dailystone
 
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -67,6 +68,7 @@ class MainFragment : Fragment() {
 
         mainBtnHappy.setOnClickListener {
             var dialog = DialogDiaryFragment(it.context,date)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.show()
         }
     }

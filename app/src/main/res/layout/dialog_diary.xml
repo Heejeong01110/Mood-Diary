@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background">
 
 
     <FrameLayout
@@ -17,17 +18,17 @@
         >
         <ImageView
             android:id="@+id/ddIvbackground"
-            android:layout_width="340dp"
-            android:layout_height="340dp"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
             android:src="@drawable/colorback"
-            android:background="#ffffff"/>
-
+            android:layout_gravity="center"
+            />
         <ImageView
             android:id="@+id/ddIvfront"
-            android:layout_width="340dp"
-            android:layout_height="340dp"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
             android:src="@drawable/colorfront"
-            android:background="#ffffff"/>
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/ddIvicon"
@@ -123,7 +124,6 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:background="#ffffff"
             android:gravity="center"
             android:maxWidth="205dp"
             android:maxHeight="85dp"
@@ -138,7 +138,6 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:background="#ffffff"
             android:gravity="center"
             android:maxWidth="85dp"
             android:maxHeight="85dp"

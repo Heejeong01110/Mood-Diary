@@ -63,7 +63,11 @@ class MainFragment : Fragment() {
         readCount()
         goalCount()
         dailyGoal()
+<<<<<<< HEAD
         mainTvDate.text = date
+=======
+        mainTvDate.text = "${monthformatted}월 ${dayformatted}일"
+>>>>>>> parent of 789ac00... Merge branch 'master' into KangHeejeong
 
         mainBtnHappy.setOnClickListener {
             var dialog = DialogDiaryFragment(it.context,date)

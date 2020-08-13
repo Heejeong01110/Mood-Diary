@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_main"
-    tools:context=".UserInfoActivity"
-    android:paddingTop="20dp">
+    tools:context=".UserInfoActivity">
 
     <ImageView
         android:id="@+id/btnBack"

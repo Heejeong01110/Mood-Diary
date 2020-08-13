@@ -30,11 +30,8 @@
         android:textSize="20sp"
         android:fontFamily="@font/fontstyle"
         android:text="이전"
-        android:textStyle="bold"
-        android:background="@drawable/button_background"
         app:layout_constraintEnd_toStartOf="@+id/mainTvDate"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/mainBtnNext"
@@ -43,8 +40,9 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="55dp"
         android:text="다음"
-        android:textStyle="bold"
-        android:background="@drawable/button_background"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
         app:layout_constraintStart_toEndOf="@+id/mainTvDate"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,13 +125,14 @@
         android:id="@+id/mainBtnHappy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="돌멩쓰 추가하기"
-        android:ems="8"
-        android:background="@drawable/button_background"
-        app:layout_constraintStart_toEndOf="@id/mainTvHappy"
-        app:layout_constraintBaseline_toBaselineOf="@+id/mainTvHappy"
-        app:layout_constraintTop_toTopOf="@+id/mainTvHappy" />
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="273dp"
+        android:text="일기 쓰기"
+        android:includeFontPadding="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/fontstyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <GridLayout
         android:id="@+id/mainGrid"

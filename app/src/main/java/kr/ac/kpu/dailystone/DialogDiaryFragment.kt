@@ -118,6 +118,9 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
 
             var act = motionEvent.action
             when (act){
+                MotionEvent.ACTION_DOWN -> {
+                    ddIvicon.setImageResource(R.drawable.onclick_surpirse)
+                }
                 MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN -> { //누르고 움직였을 때
                     if((wlen/2)*(wlen/2) >= radius){//원 안을 눌렀을 때
                         changeIconColor(motionEvent)
@@ -349,6 +352,9 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
 
             var act = motionEvent.action
             when (act){
+                MotionEvent.ACTION_DOWN -> {
+                    ddIvicon.setImageResource(R.drawable.onclick_surpirse)
+                }
                 MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN -> { //누르고 움직였을 때
                     if((width/2)*(width/2) >= radius){//원 안을 눌렀을 때
                         changeIconColor(motionEvent)

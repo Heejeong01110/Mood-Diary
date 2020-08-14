@@ -108,7 +108,6 @@ class UserFragment : Fragment() {
             }
             database.child(uid!!).child("goal").child(year).child(month).addValueEventListener(postListener)
 
-            dlgBuilder.setTitle("월별 목표치 설정")
             dlgBuilder.setView(dlgView)
             dlgBuilder.setPositiveButton("확인") {dialogInterface, i ->
                 if(settingGoal.text.toString() == ""){

@@ -100,6 +100,7 @@ class MonthDetailFragment : DialogFragment() {
                                 val dateSet = selYear + selMonth + selDay
                                 val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
                                 dialog.show()
+                                dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
                                 dialog.ddEdHl.setText(snapshot.child("$i").child("level").value.toString())
                                 dialog.ddEdDiary.setText(snapshot.child("$i").child("diary").value.toString())
                                 matchImageViewColor(dialog.ddIvicon, snapshot.child("$i").child("color").value.toString())
@@ -121,6 +122,7 @@ class MonthDetailFragment : DialogFragment() {
                                 val dateSet = selYear + selMonth + selDay
                                 val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
                                 dialog.show()
+                                dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
                                 dialog.ddEdHl.setText(snapshot.child("$i").child("level").value.toString())
                                 dialog.ddEdDiary.setText(snapshot.child("$i").child("diary").value.toString())
                                 matchImageViewColor(dialog.ddIvicon, snapshot.child("$i").child("color").value.toString())

@@ -3,6 +3,7 @@ package kr.ac.kpu.dailystone
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.Layout
@@ -121,6 +122,7 @@ class MonthDetailFragment : DialogFragment() {
                             iv.setOnClickListener {
                                 val dateSet = selYear + selMonth + selDay
                                 val dialog = DialogDiaryFragmentModify(it.context, dateSet , "$i")
+                                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                                 dialog.show()
                                 dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
                                 dialog.ddEdHl.setText(snapshot.child("$i").child("level").value.toString())

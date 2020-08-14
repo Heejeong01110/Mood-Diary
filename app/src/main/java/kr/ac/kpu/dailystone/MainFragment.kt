@@ -280,6 +280,7 @@ class MainFragment : Fragment() {
                 if (snapshot.child("goal").child(goalYear).child(goalMonth)
                         .child("goal").value == null
                 ) {
+                    Maxgoal=0
                     view?.mainPbMgoal?.visibility = View.INVISIBLE
                     view?.mainPbMgoal2?.visibility = View.INVISIBLE
                 } else {

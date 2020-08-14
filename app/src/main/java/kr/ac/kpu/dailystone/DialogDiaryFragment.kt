@@ -470,13 +470,13 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
             val hex = "#"+Integer.toHexString(pixel)
             ddIvicon.setColorFilter(Color.rgb(r,g,b))
             Log.d("color","r:$r, g:$g, b:$b")
-            if(r==255 && g==0 && b==0){
+            if(r==229 && g==115 && b==115){
                 diaryColor=1
-            }else if(r==255&&g==192&&b==0){
+            }else if(r==255&&g==241&&b==118){
                 diaryColor=2
-            }else if(r==0&&g==176&&b==80){
+            }else if(r==204&&g==255&&b==144){
                 diaryColor=3
-            }else if(r==0&&g==112&&b==192){
+            }else if(r==92&&g==107&&b==192){
                 diaryColor=4
             }else{
                 diaryColor=0

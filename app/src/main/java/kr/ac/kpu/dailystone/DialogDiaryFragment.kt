@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -14,7 +13,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
@@ -25,8 +23,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.dialog_diary.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Random
-import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -66,12 +62,6 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         Toast.makeText(context, "date $date", Toast.LENGTH_SHORT).show()
 
         drawIv()
-        ddBtnDice.setOnClickListener {
-            var rnd = Random()
-            var num = rnd.nextInt(100)
-            ddEdHl.setText(num.toString())
-            level = ddEdHl.text.toString()
-        }
         ddEdHl.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 try {
@@ -101,7 +91,6 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
         ddBtnYes.setOnClickListener {
             level = ddEdHl.text.toString()
             diary = ddEdDiary.text.toString()
-            Log.d("color","e:$emoticon, d:$diaryColor, level:$level, diary:$diary")
             if(emoticon==0||diaryColor==0||level==""||diary==""){
                 Toast.makeText(context,"다시 입력해주세요",Toast.LENGTH_SHORT).show()
             }else{
@@ -221,13 +210,13 @@ class DialogDiaryFragment(context: Context,date:String) : Dialog(context) {
             val hex = "#"+Integer.toHexString(pixel)
             ddIvicon.setColorFilter(Color.rgb(r,g,b))
             Log.d("color","r:$r, g:$g, b:$b")
-            if(r==229 && g==115 && b==115){
+            if(r==255 && g==0 && b==0){
                 diaryColor=1
-            }else if(r==255&&g==241&&b==118){
+            }else if(r==255&&g==192&&b==0){
                 diaryColor=2
-            }else if(r==204&&g==255&&b==144){
+            }else if(r==0&&g==176&&b==80){
                 diaryColor=3
-            }else if(r==92&&g==107&&b==192){
+            }else if(r==0&&g==112&&b==192){
                 diaryColor=4
             }else{
                 diaryColor=0
@@ -309,27 +298,10 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
         year = date.substring(0,2)
         monthformatted = date.substring(2,4)
         dayformatted = date.substring(4,6)
+        Toast.makeText(context, "date $date", Toast.LENGTH_SHORT).show()
 
         //touch
         drawIv()
-/*
-        ddBtnDice.setOnClickListener {
-            Log.d("hi","dice")
-            var ran = 0
-            ran = (0 until 100).random()
-            val tex = findViewById<EditText>(R.id.ddEdHl)
-            tex.setText("$ran")
-        }
-
- */
-        ddBtnDice.setOnClickListener {
-            var rnd = Random()
-            Log.d("hi","dice")
-            var num = rnd.nextInt(100)
-            ddEdHl.setText(num.toString())
-            level = ddEdHl.text.toString()
-        }
-
         ddEdHl.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 try {
@@ -471,13 +443,13 @@ class DialogDiaryFragmentModify(context: Context, date:String, val modifyCnt: St
             val hex = "#"+Integer.toHexString(pixel)
             ddIvicon.setColorFilter(Color.rgb(r,g,b))
             Log.d("color","r:$r, g:$g, b:$b")
-            if(r==229 && g==115 && b==115){
+            if(r==255 && g==0 && b==0){
                 diaryColor=1
-            }else if(r==255&&g==241&&b==118){
+            }else if(r==255&&g==192&&b==0){
                 diaryColor=2
-            }else if(r==204&&g==255&&b==144){
+            }else if(r==0&&g==176&&b==80){
                 diaryColor=3
-            }else if(r==92&&g==107&&b==192){
+            }else if(r==0&&g==112&&b==192){
                 diaryColor=4
             }else{
                 diaryColor=0

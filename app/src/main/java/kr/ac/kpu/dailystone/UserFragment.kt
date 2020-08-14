@@ -1,14 +1,11 @@
 package kr.ac.kpu.dailystone
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,7 +22,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_userinfo.*
-import org.w3c.dom.Text
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -84,7 +80,7 @@ class UserFragment : Fragment() {
             }
             database.child(uid!!).child("goal").child(year).child(month).addValueEventListener(postListener)
 
-            dlgBuilder.setTitle("월별 목표치 설정")
+            //dlgBuilder.setTitle("월별 목표치 설정")
             dlgBuilder.setView(dlgView)
             dlgBuilder.setPositiveButton("확인") {dialogInterface, i ->
                 if(settingGoal.text.toString() == ""){

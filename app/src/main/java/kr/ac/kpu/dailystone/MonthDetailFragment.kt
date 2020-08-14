@@ -74,6 +74,7 @@ class MonthDetailFragment : DialogFragment() {
         database = Firebase.database.reference
         var uid = mAuth?.uid
         val rootView = inflater.inflate(R.layout.fragment_month_detail, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
         rootView.tvOutputMonth.text = selYear + "년" + selMonth + "월" + selDay + "일 "

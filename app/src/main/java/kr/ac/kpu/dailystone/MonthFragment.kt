@@ -1,6 +1,8 @@
 package kr.ac.kpu.dailystone
 
 import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -138,6 +140,7 @@ class MonthFragment : Fragment() {
                             iv.setOnClickListener {
                                 val mDialog
                                         = MonthDetailFragment.newInstance(yearformatted, monthformatted, "$i")
+
                                 fragmentManager?.let { it1 -> mDialog.show(it1,MonthDetailFragment.TAG) }
 
                             }

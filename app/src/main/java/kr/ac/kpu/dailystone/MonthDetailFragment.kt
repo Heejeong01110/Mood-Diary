@@ -74,6 +74,7 @@ class MonthDetailFragment : DialogFragment() {
         database = Firebase.database.reference
         var uid = mAuth?.uid
         val rootView = inflater.inflate(R.layout.fragment_month_detail, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
         rootView.tvOutputMonth.text = selYear + "년" + selMonth + "월" + selDay + "일 "
@@ -162,24 +163,11 @@ class MonthDetailFragment : DialogFragment() {
 
     private fun matchImageViewColor(view : ImageView, i : String){
         when(i){
-            "1" -> {
-                view.setColorFilter(Color.rgb(255,0,0))
-            }
-
-            "2" -> {
-                view.setColorFilter(Color.rgb(255,192,0))
-            }
-
-            "3" -> {
-                view.setColorFilter(Color.rgb(0, 176,80))
-            }
-
-            "4" -> {
-                view.setColorFilter(Color.rgb(0,112,192))
-            }
-            "0" -> {
-                view.setColorFilter(Color.rgb(0,112,192))
-            }
+            "1" -> {view.setColorFilter(Color.rgb(229,115,115))}
+            "2" -> {view.setColorFilter(Color.rgb(255,241,118))}
+            "3" -> {view.setColorFilter(Color.rgb(204, 255,144))}
+            "4" -> {view.setColorFilter(Color.rgb(92,107,192))}
+            "0" -> {view.setColorFilter(Color.rgb(0,112,192))}
         }
     }
 

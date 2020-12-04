@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/progress_background">
+        <shape>
+            <corners android:radius="15dip" />
+            <!--배경-->
+            <gradient
+                android:startColor="@color/progressBack"
+                android:centerColor="@color/progressBack"
+                android:centerY="0.75"
+                android:endColor="@color/progressBack"
+                android:angle="270"
+                />
+        </shape>
+    </item>
+
+    <item android:id="@+id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="15dip" />
+                <!--2번째-->
+                <gradient
+                    android:startColor="@color/progressTwo"
+                    android:centerColor="@color/progressTwo"
+                    android:centerY="0.75"
+                    android:endColor="@color/progressTwo"
+                    android:angle="270"
+                    />
+            </shape>
+        </clip>
+    </item>
+
+    <item android:id="@+id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="15dip" />
+                <!--1번째-->
+                <gradient
+                    android:startColor="@color/progressOne"
+                    android:centerColor="@color/progressOne"
+                    android:centerY="0.75"
+                    android:endColor="@color/progressOne"
+                    android:angle="270"
+                    />
+            </shape>
+        </clip>
+    </item>
+</layer-list>
